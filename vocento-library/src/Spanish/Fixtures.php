@@ -13,37 +13,15 @@ class Fixtures extends Base implements ICommon
         //conector api
         parent::__construct();
         $this->teamid = $teamid;
-        
+        $this->_load_data();
     }
     
-    private function _load_raw()
+    protected function _load_data()
     {
-        $this->objapi->add_param("date", $this->date)->add_param("teamid", $this->teamid);
+        //configuro los parámetros de llamada
+        $this->objapi->add_param("teamid", $this->teamid);
+        //se obtiene todas las fechas en las que participará el equipo
         $this->data = $this->get_fixtures();        
     }
-    
-    public function get_teams($date)
-    {
-        return $this->data[$date]["teams"];
-    }    
-    
-    public function get_location() 
-    {
-        return $this->data[$date]["teams"];
-    }    
-    
-    public function get_datetime() 
-    {
-        
-    }
-
- 
-
-    public function get_result() 
-    {
-        return $this->data["result"];
-    }
-
-
 
 }
