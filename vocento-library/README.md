@@ -10,3 +10,7 @@ Si bien las claves en persistencia son (fecha y teamid) habría que buscar si ex
 registros
 
 La estructura de clases no está probada ya que es un esqueleto genérico
+
+He creado el namespace Spanish porque la intención es poder reutilizar la lógica en otras ligas
+
+
