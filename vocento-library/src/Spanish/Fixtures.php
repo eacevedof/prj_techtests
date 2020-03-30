@@ -2,6 +2,7 @@
 namespace League\Spanish;
 
 use League\Base\ICommon;
+use League\Base\Api;
 
 class Fixtures implements ICommon
 {
