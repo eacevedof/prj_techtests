@@ -8,6 +8,7 @@ class Api
     
     private $url = "";
     private $type = "";
+    private $params = [];
     
     /**
      * Customizar el endpoint  
@@ -18,6 +19,7 @@ class Api
     {
         $this->url = $url;
         $this->type = $type;
+        $this->params = [];
     }
  
     private function _get_response($url)
@@ -30,9 +32,23 @@ class Api
         return json_decode($result, true);  
     }
     
+    private function _get_with_params($url)
+    {
+        if(!$this->params)
+            return $url;
+        
+        $tmp = [];
+        foreach($this->params as $k => $v)
+            $tmp[] = "$k=$v";
+        
+        $strparams = implode("&",$tmp);
+        return $url."&".$strparams;
+    }
+    
     public function get_data()
     {
         $url = $this->url."?set=$this->type";
+        $url = $this->_get_with_params($url);
         return $this->_get_response($url);
     }
     
@@ -47,5 +63,13 @@ class Api
         $this->type = $type;
         return $this;
     }
+    
+    public function add_param($key,$val)
+    {
+        $this->params[$key] = $val;
+        return $this;
+    }
+    
+    public function reset_params(){$this->params = []; return $this;}
     
 }

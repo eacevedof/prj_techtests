@@ -6,6 +6,7 @@ use League\Base\Api;
 abstract class Base 
 {
     protected $objapi;
+    protected $data;
     
     public function __construct()
     {
@@ -21,4 +22,6 @@ abstract class Base
     {
         return $this->objapi->set_type("match")->get_data();
     }
+    
+    
 }
