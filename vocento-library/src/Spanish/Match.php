@@ -8,47 +8,52 @@ use League\Base\IMatch;
 
 class Match extends Base implements ICommon, IMatch
 {
-    public function __construct() 
+    private $teamid;
+    
+    /**
+     * Con una fecha y un equipo se puede saber los datos del encuentro
+     * el equipo adversario, el lugar, los jugadores, etc
+     * @param type $date
+     * @param type $teamid
+     */
+    public function __construct($date,$teamid) 
     {
-        //define el conector de la api
+        //conector api
         parent::__construct();
+        $this->date = $date;
+        $this->teamid = $teamid;
+        $this->_load_data();
+    }
+    
+    protected function _load_data()
+    {
+        $this->objapi->add_param("date", $this->date)->add_param("teamid",$this->teamid);
+        $this->data = $this->get_match();        
+    }
+    
+    public function get_players() 
+    {
+        return $this->data[$this->date][$this->teamid]["players"];
     }
 
+    public function get_score_player() 
+    {
+        return $this->data[$this->date][$this->teamid]["scorer1"];
+    }    
 
-    public function get_card_time() {
-        
+    public function get_score_time() 
+    {
+        return $this->data[$this->date][$this->teamid]["score_time"];
+    }
+    
+    public function get_player_card($color = "yellow") 
+    {
+        return $this->data[$this->date][$this->teamid]["cards"][$color]["player"];
     }
 
-    public function get_datetime() {
-        
-    }
-
-    public function get_location() {
-        
-    }
-
-    public function get_player_card($color = "yellow") {
-        
-    }
-
-    public function get_players() {
-        
-    }
-
-    public function get_result() {
-        
-    }
-
-    public function get_score_player() {
-        
-    }
-
-    public function get_score_time() {
-        
-    }
-
-    public function get_teams() {
-        
+    public function get_card_time($color = "yellow") 
+    {
+        return $this->data[$this->date][$this->teamid]["cards"][$color]["time"];
     }
 
 }
