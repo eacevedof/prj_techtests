@@ -1,6 +1,9 @@
 <?php
 namespace League\Base;
 
+/**
+ * Metodos comunes para ambos sets del unico endpoint
+ */
 interface ICommon
 {
     public function get_teams();

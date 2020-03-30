@@ -5,7 +5,9 @@ use League\Base\Base;
 use League\Base\ICommon;
 use League\Base\IMatch;
 
-
+/**
+ * Gestiona el consumo de datos del SET: "Match Report Feed"
+ */
 class Match extends Base implements ICommon, IMatch
 {
     private $teamid;
