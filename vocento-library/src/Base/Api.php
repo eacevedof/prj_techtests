@@ -1,6 +1,10 @@
 <?php
 namespace League\Base;
 
+/**
+ * Permite el acceso al único endpoint pero tambien se puede reconfigurar
+ * para consumir otro
+ */
 class Api
 {
     const DEFAULT_ENDPOINT = "http://localhost:3600";

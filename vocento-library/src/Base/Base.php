@@ -3,6 +3,10 @@ namespace League\Base;
 
 use League\Base\Api;
 
+/*
+ * Clase troncal que sirve para centralizar el objeto que provee el acceso a la api
+ * y métodos que tienen en común Fixture y Match
+ */
 abstract class Base 
 {
     protected $objapi;

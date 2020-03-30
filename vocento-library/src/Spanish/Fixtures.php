@@ -4,6 +4,9 @@ namespace League\Spanish;
 use League\Base\Base;
 use League\Base\ICommon;
 
+/**
+ * Gestiona el consumo de datos del SET: "Fixtures Feed"
+ */
 class Fixtures extends Base implements ICommon
 {
     private $teamid;

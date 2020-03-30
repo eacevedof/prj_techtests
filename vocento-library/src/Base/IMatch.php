@@ -1,6 +1,9 @@
 <?php
 namespace League\Base;
 
+/**
+ * Metodos obligatorios solo para clases de tipo Match
+ */
 interface IMatch
 {
     public function get_players();
