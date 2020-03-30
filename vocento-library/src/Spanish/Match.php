@@ -8,7 +8,9 @@ use League\Base\IMatch;
 
 class Match extends Base implements ICommon, IMatch
 {
-    public function __construct() {
+    public function __construct() 
+    {
+        //define el conector de la api
         parent::__construct();
     }
 
