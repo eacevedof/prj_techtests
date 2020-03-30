@@ -39,11 +39,13 @@ class Api
     public function set_endpoint($url= self::DEFAULT_ENDPOINT)
     {
         $this->url = $url;
+        return $this;
     }
     
     public function set_type($type=self::DEFAULT_TYPE)
     {
         $this->type = $type;
+        return $this;
     }
     
 }
