@@ -2,8 +2,6 @@ He asumido distintas funcionalidades de la api feed.
 - La estructura de respuesta
 - Los parametros que recibe
 
-Doy por hecho que un en una fecha solo puede haber un partido por equipo
-
 En public index.php he creado la implementación del aviso por sms
 
 He incluido la gestion de persistencia en el notificador pero podría haberlo separado en una entidad 
