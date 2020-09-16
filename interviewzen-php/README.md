@@ -14,7 +14,7 @@ if ($a == null) {
 
 Question 2
 Resultado de $var: $var = true ? '1' : false ? '2' : '3';
-- '1'
+- '1' [nok] es '2' tiene trampa. Sería: (true ? '1' : false) ? '2' : '3';
 
 Question 3
 ¿Que utilidad tiene esta expresión regular?:

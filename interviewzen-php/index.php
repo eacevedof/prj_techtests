@@ -1,7 +1,7 @@
 <?php
-$a = array();
-if ($a == null) {
-    echo 'verdadero';
-} else {
-    echo 'falso';
-}
+$var = true ? '1' : false ? '2' : '3';
+
+echo "<pre>\$var = true ? '1' : false ? '2' : '3';</pre>";
+
+echo $var; // 2
+
