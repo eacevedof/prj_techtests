@@ -99,7 +99,6 @@ Yo los uso para gestionar variables de entorno y logs.  Tengo un trait con cada 
 
 Question 9
 ¿Qué ocurre al ejecutar el siguiente código?:
-<?php
 function sum(int $a, int $b)
 {
     return $a + $b;
@@ -109,15 +108,23 @@ $a = 5;
 $b = "4";
 
 echo " $a + $b = " . sum($a, $b);
-- en php 7 daría un error en el interprete porque se ha definido un tipo entero en b y se esta pasando un string "4"
+- en php 7 daría un error en el interprete porque se ha definido un tipo entero en b y se esta pasando un string "4" [nok]
+- si se usa declare(stryct_types=1):
+    Fatal error: Uncaught TypeError: Argument 2 passed to sum() must be of the type int, string given
+    TypeError: Argument 2 passed to sum() must be of the type int, string given, called
+sino:
+    5 + 4 = 9
 
 Question 10
 ¿Qué son los estándares PSR?
-- son en su mayoría estructuras de arquitectura de software que garantizan una uniformidad de interacción con estas ya que se basan en interfaces.  Esto hace posible cambiar ciertas piezas del código por otras siempre y cuando cumplan el stándar
+- son en su mayoría estructuras de arquitectura de software que garantizan una uniformidad de interacción con estas ya que se basan en interfaces.  
+Esto hace posible cambiar ciertas piezas del código por otras siempre y cuando cumplan el stándar [nok]
+
+- Son especificaciones de código basadas en conceptos de programación ya probados cuya intención es proveer interoperabilidad entre componentes. 
+Estas recomendaciones permiten escribir codigo de calidad y mantenimble a largo plazo.
 
 Question 11
 Define un servicio en Symfony llamado foo (utiliza el namespace que quieras para la clase Foo) que tenga como dependencia el servicio de Logger de Symfony, y que no se instancie hasta que no se utilice.
-<?php
 namespace App\Services;
 
 use Symfony\Logger;
