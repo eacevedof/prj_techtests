@@ -20,7 +20,8 @@ Question 3
 ¿Que utilidad tiene esta expresión regular?:
 
 preg_replace("/([0-9]{4})\/([0-9]{2})\/([0-9]{2})/i","$3/$2/$1",$result);
-- extrae en $result un formato fecha tipo [yyyy,mm,dd]
+- extrae en $result un formato fecha tipo [yyyy,mm,dd] [nok]
+- Extrae una posible fecha guardada en 
 
 Question 4
 ¿Se ejecutará la llamada al método mysqli_close?
