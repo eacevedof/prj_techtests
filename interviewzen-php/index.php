@@ -1,18 +1,17 @@
 <?php
-//function some_function($param){}
+function some_function($param){}
 
 $db = mysqli_connect();
 try {
-    echo "trying\n\n";
+    echo "trying\n\n<br/>";
     $e = some_function($db);
 
 }
 catch (\Exception $err){
-    echo "EXCEPTION error:".$err->getMessage();
-    die("catch");
+    echo "<br/>EXCEPTION error:".$err->getMessage()."<br/>";
 }
 finally {
-    echo "closing\n\n";
+    echo "finally closing\n\n";
     mysqli_close($db);
 }
 echo "- END -";
@@ -26,4 +25,9 @@ Warnings:
 Warning: mysqli_connect(): (HY000/2002): No such file or director
 Warning: mysqli_close() expects parameter 1 to be mysqli, bool given in
 
+- si la función no está definida pero entra por finally
+Fatal error: Uncaught Error: Call to undefined function some_function()
+Error: Call to undefined function some_function()
+
+En conclusion siempre entra por finally
 */
