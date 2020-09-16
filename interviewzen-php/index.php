@@ -1,21 +1,25 @@
 <?php
-$result = "Esta es la fecha de mi cumpleaños 2021/02/01 nací en diciembre";
-//$result = "2021/02/01";
+function some_function($param)
+{}
 
+$db = mysqli_connect();
+try {
+    echo "trying\n\n";
+    $e = some_function($db);
 
-//$s1="01"; $s2="07"; $s3="1976";
-//$s1="1988"; $s2="11"; $s3="03";
+}
+catch (\Exception $err){
+    echo "EXCEPTION error:".$err->getMessage();
+    //die();
+}
+finally {
+    echo "closing\n\n";
+    mysqli_close($db);
+}
+echo "- END -";
 
-// /i case insensitve
-$r = preg_replace("/([0-9]{4})\/([0-9]{2})\/([0-9]{2})/i","$3-$2-$1", $result);
-echo "<pre>";
-print_r("original: $result");
-echo "\n\n";
-print_r("cambiado: ".$r);
-echo "\n\n";
-echo "
-Busca en result el patron y lo extrae en las variables ordenadas \$3 \$2 \$1, 1:año, 2:mes, 3:día con estas variables definidas se forma el string de remplazo
-haciendo un cambio de posicion de los elementos de la fecha
-Si entra 2021/02/01 saldría 02/02/2021
-";
+/*
+- si la funcion some_function some_function está definida:
+    - y hay un catch, se ejecut mysql_close()
 
+*/
