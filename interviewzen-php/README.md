@@ -10,7 +10,7 @@ if ($a == null) {
     echo 'falso';
 }
 
-- verdadero
+- verdadero  [ok]
 
 Question 2
 Resultado de $var: $var = true ? '1' : false ? '2' : '3';
