@@ -60,7 +60,11 @@ try {
   foo();
 
 } catch (\Exception $e) { echo 'EXCEPTION: ' . $e->getMessage();}
-en php 5 saltaria un error del interprete con funcion no definida y en PHP 7 entraria por la excepcion y se mostraría un mensaje de función no definida
+- en php 5 saltaria un error del interprete con funcion no definida y en PHP 7 entraria por la excepcion y se mostraría un mensaje de función no definida [nok]
+- FIX si una función no está definida no se puede capturar la excepcion con catch
+  se mostraría:
+      Fatal error: Uncaught Error: Call to undefined function foo()
+      Error: Call to undefined function foo()
 
 Question 6
 En PHP, ¿ Para que se usa el operador lógico === ?
