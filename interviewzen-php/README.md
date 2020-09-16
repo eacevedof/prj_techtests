@@ -124,7 +124,9 @@ Esto hace posible cambiar ciertas piezas del código por otras siempre y cuando 
 Estas recomendaciones permiten escribir codigo de calidad y mantenimble a largo plazo.
 
 Question 11
-Define un servicio en Symfony llamado foo (utiliza el namespace que quieras para la clase Foo) que tenga como dependencia el servicio de Logger de Symfony, y que no se instancie hasta que no se utilice.
+Define un servicio en Symfony llamado foo (utiliza el namespace que quieras para la clase Foo) 
+que tenga como dependencia el servicio de Logger de Symfony, y que no se instancie hasta que no se utilice.
+
 namespace App\Services;
 
 use Symfony\Logger;
@@ -133,22 +135,19 @@ class FooService{
     private $logger;
     
     private function _init(){
-        if(!$this->logger)
-           $this->logger = new Logger();
-           
+        if(!$this->logger) $this->logger = new Logger();           
     }
     
     public function log($content)
     {
         $this->_init();
         $this->logger->log($content)
-    }
-    
-    
+    }   
 }
 
 $service = new FooService();
 $service->log("some content")
+
 
 Question 12
 Define qué es la compiler pass y un ejemplo de para qué se puede utilizar.
