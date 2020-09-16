@@ -1,20 +1,31 @@
 <?php
-//declare(strict_types = 1);
-
-function sum(int $a, int $b)
-{
-    return $a + $b;
+interface Iface {
+    public function method_a();
+    public function method_b();
 }
 
-$a = 5;
-$b = "4";
+class H implements Iface {
+    public function method_a()
+    {
+        // TODO: Implement method_a() method.
+    }
 
-echo " $a + $b = " . sum($a, $b);
+    public function method_b()
+    {
+        // TODO: Implement method_b() method.
+    }
+}
 
-/*
-si se usa declare(stryct_types=1):
-    Fatal error: Uncaught TypeError: Argument 2 passed to sum() must be of the type int, string given
-    TypeError: Argument 2 passed to sum() must be of the type int, string given, called
-sino:
-    5 + 4 = 9
-*/
+class M {
+    private Iface $oiface;
+    public function __construct(Iface $iface){
+        $this->oiface = $iface;
+    }
+
+    public function run(){
+        $this->oiface->method_a();
+        $this->oiface->method_b();
+    }
+}
+
+//$oi = new Iface();

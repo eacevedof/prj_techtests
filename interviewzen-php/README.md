@@ -125,7 +125,7 @@ Estas recomendaciones permiten escribir codigo de calidad y mantenimble a largo 
 
 Question 11
 Define un servicio en Symfony llamado foo (utiliza el namespace que quieras para la clase Foo) 
-que tenga como dependencia el servicio de Logger de Symfony, y que no se instancie hasta que no se utilice.
+que tenga como dependencia el servicio de Logger de Symfony, y que no se instancie hasta que no se utilice. 
 
 namespace App\Services;
 
@@ -147,6 +147,37 @@ class FooService{
 
 $service = new FooService();
 $service->log("some content")
+- creo que [nok]
+
+namespace App\Services;
+
+use Psr\Log\LoggerInterface;
+
+class XxxService{
+    private $logger;
+
+    public function some_method(){
+      echo "method without logging"
+      return $this;
+    }
+
+    private function _log($text){
+        if(!$this->logger) $this->logger = new LoggerInterface(); //wrong approach creating object from Interface
+        $this->logger->info($text)
+    }
+
+    public funtion method_withlog(){
+        $this->_log("text logged")
+        return $this;
+    }
+}
+
+(new XxxService()))
+    ->some_method()
+    ->method_withlog() //here is created
+    ->some_method()->method_withlog();
+
+https://stackoverflow.com/questions/63924096/define-a-service-with-lazy-loading-logger-in-symfony
 
 
 Question 12
