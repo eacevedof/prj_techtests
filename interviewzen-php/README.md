@@ -85,7 +85,17 @@ Question 7
 Question 8
 ¿Qué son los traits? Explícalo con tus propias palabras, indica algún caso de uso en el que estaría bien aplicarlo y posibles contraindicaciones de usar traits.
 - Es una implementación en php que permite emular la multiherencia. Los traits puede que sobrescriban métodos ya existentes. Se usa para extender una funcionalidad sin aplicar herencia.
-Yo los uso para gestionar variables de entorno y logs.  Tengo un trait con cada funcionalidad y lo agrego en la clase según la necesidad.
+Yo los uso para gestionar variables de entorno y logs.  Tengo un trait con cada funcionalidad y lo agrego en la clase según la necesidad. [nok]
+- Caso de uso:
+    Tengo una clase que está extendiendo otra y necesito cierta funcionalidad que tengo en otra clase, podría llevar esa funcionalidad a un trait e instanciarla
+    en ambas clases 
+    
+- Conflictos:
+    - Si un Trait inserta un método con el mismo nombre de otro trait se produce un error fatal, esto se soluciona con instanceof
+    use A, B {
+         B::smallTalk insteadof A;
+         A::bigTalk insteadof B;
+     } 
 
 Question 9
 ¿Qué ocurre al ejecutar el siguiente código?:
