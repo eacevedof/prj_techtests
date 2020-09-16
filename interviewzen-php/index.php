@@ -1,7 +1,6 @@
 <?php
-$var = true ? '1' : false ? '2' : '3';
-
-echo "<pre>\$var = true ? '1' : false ? '2' : '3';</pre>";
-
-echo $var; // 2
+$s1=""; $s2=""; $s3="";
+$result = [];
+preg_replace("/([0-9]{4})\/([0-9]{2})\/([0-9]{2})/i","$3/$2/$1",$result);
+print_r($result);
 
