@@ -79,7 +79,8 @@ echo "result $r \n\n"; //false
 
 Question 7
 ¿Cómo es el funcionamiento de la session en PHP? Explicar un poco el funcionamiento.
-- La sesion es un identificador por cliente conectado al servidor de modo que sea identificado como único se usa junto con la gestión de cookies
+- La sesion es un identificador por cliente conectado al servidor de modo que sea identificado como único se usa junto con la gestión de cookies [ok]
+- La sesion en PHP crea un identificador y lo envia al navegador mediante de cookies de sesion. Este id sirve para recuperar los datos de la sesion existente.
 
 Question 8
 ¿Qué son los traits? Explícalo con tus propias palabras, indica algún caso de uso en el que estaría bien aplicarlo y posibles contraindicaciones de usar traits.
