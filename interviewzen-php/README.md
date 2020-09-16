@@ -54,7 +54,7 @@ Question 5
 Qué ocurre al ejecutar este fragmento de código en versiones de PHP 5.x? ¿Y en PHP 7?
 
 Nota: foo() no está definido
-<?php
+
 try {
   foo();
 
