@@ -68,7 +68,11 @@ try {
 
 Question 6
 En PHP, ¿ Para que se usa el operador lógico === ?
-- evalua la igualdad por tipo y valor
+- evalua la igualdad por tipo y valor [ok]
+$r = "9" == 9;
+echo "result $r \n\n"; //true
+$r = "9" === 9;
+echo "result $r \n\n"; //false
 
 Question 7
 ¿Cómo es el funcionamiento de la session en PHP? Explicar un poco el funcionamiento.
