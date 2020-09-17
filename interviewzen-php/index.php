@@ -1,31 +1,21 @@
 <?php
-interface Iface {
-    public function method_a();
-    public function method_b();
-}
+class StaticA
+{
+    protected static $value = "value A \n<br/>";
 
-class H implements Iface {
-    public function method_a()
-    {
-        // TODO: Implement method_a() method.
+    public static function pr_value_self(){
+        echo self::$value;
     }
 
-    public function method_b()
-    {
-        // TODO: Implement method_b() method.
+    public static function pr_value_static(){
+        echo static::$value;
     }
 }
 
-class M {
-    private Iface $oiface;
-    public function __construct(Iface $iface){
-        $this->oiface = $iface;
-    }
-
-    public function run(){
-        $this->oiface->method_a();
-        $this->oiface->method_b();
-    }
+class StaticB extends StaticA
+{
+    protected static $value = "B";
 }
 
-//$oi = new Iface();
+StaticB::pr_value_self();//value A
+StaticB::pr_value_static();//B

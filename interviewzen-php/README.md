@@ -197,11 +197,13 @@ Question 13
 Question 14
 Explica como funciona el late binding en PHP
 - Candidate skipped question [nok]
-
-
+- El compilador comprueba errores y si no los hay entonces asigna los valores a las variables y ejecuta el programa, esto es el early binding
+El late binding en php se hace con static y permite rescribir atributos en una clase estática en tiempo de ejecución
+https://youtu.be/jClyQktD4ow
 
 Question 15
 ¿Qué es lo que se almacena en aceleradores de caché como OPcache o APC?
 - Se guarda contenido serializado y minificado para su posterior reutilización sin tener que recompilar el contenido.
-Emula el contenido estático
+Emula el contenido estático [???]
+
 </pre>
