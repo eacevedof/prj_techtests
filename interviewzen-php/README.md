@@ -207,5 +207,6 @@ Question 15
 Emula el contenido estático [nok]
  - OPcache mejora el rendimiento de PHP almacenando el código de bytes de un script precompilado en la memoria compartida, 
  eliminando así la necesidad de que PHP cargue y analice los script en cada petición.
-
+- APC Su objetivo es el de proporcionar un marco robusto, libre y abierto para optimizar código de PHP intermedio mediante 
+el almacenamiento en caché.
 </pre>
