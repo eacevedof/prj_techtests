@@ -192,11 +192,13 @@ Aqui se crearía el compailer pass personalizado: src/AppBundle/DependencyInject
 
 Question 13
 ¿Qué problemas tiene el inyectar el container de Symfony como parámetro a una clase de nuestro dominio?
-- Se hace un fuerte acoplamiento con la infraestructura y el dominio no debe interactuar directamente por tipo sino por contrato
+- Se hace un fuerte acoplamiento con la infraestructura y el dominio no debe interactuar directamente por tipo sino por contrato [???]
 
 Question 14
 Explica como funciona el late binding en PHP
-- Candidate skipped question
+- Candidate skipped question [nok]
+
+
 
 Question 15
 ¿Qué es lo que se almacena en aceleradores de caché como OPcache o APC?
