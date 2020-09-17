@@ -204,6 +204,8 @@ https://youtu.be/jClyQktD4ow
 Question 15
 ¿Qué es lo que se almacena en aceleradores de caché como OPcache o APC?
 - Se guarda contenido serializado y minificado para su posterior reutilización sin tener que recompilar el contenido.
-Emula el contenido estático [???]
+Emula el contenido estático [nok]
+ - OPcache mejora el rendimiento de PHP almacenando el código de bytes de un script precompilado en la memoria compartida, 
+ eliminando así la necesidad de que PHP cargue y analice los script en cada petición.
 
 </pre>
