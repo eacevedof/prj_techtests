@@ -182,7 +182,13 @@ https://stackoverflow.com/questions/63924096/define-a-service-with-lazy-loading-
 
 Question 12
 Define qué es la compiler pass y un ejemplo de para qué se puede utilizar.
-- Candidate skipped question
+- Candidate skipped question [nok]
+- Es una clase que implementa CompilerPassInterface y que permite manipular las configuraciones iniciales de los servicios que se han compilado
+Por ejemplo en varios entornos de despliegue, me intersa que en mis servicios se inyecte siempre otro servicio de depuración pero solo si no se está en producción. Para este caso 
+me intersaría inyectar otro servicio similar pero que en lugar de lanzara el mensaje por pantalla lo envie a una cola de mensajería.
+En este ejemplo se visualiza como inyectar al servicio MailerTransportChain los servicios con tag name app.mail_transport llamando a su método addTransport
+https://symfony.com/index.php/doc/3.1/service_container/tags.html
+Aqui se crearía el compailer pass personalizado: src/AppBundle/DependencyInjection/Compiler/MailTransportPass.php
 
 Question 13
 ¿Qué problemas tiene el inyectar el container de Symfony como parámetro a una clase de nuestro dominio?
