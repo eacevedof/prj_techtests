@@ -10,7 +10,7 @@ CREATE TABLE `peliculas` (
   `anio` int(4) DEFAULT NULL,
   `pais` varchar(2) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 ";
 
 $db = new \Lig\Db\ComponentMysql();
