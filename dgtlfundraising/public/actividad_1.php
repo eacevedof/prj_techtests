@@ -3,6 +3,7 @@
 include("src/libs/bootstrap.php");
 
 //se usa en alerts.php
+$focus = "titulo";
 $error = [];
 $success = "";
 
@@ -11,6 +12,7 @@ $actividad1 = new \Libs\Actions\Actividad1($_POST);
 $actividad1->save();
 if($actividad1->is_error()){
     $error = $actividad1->get_errors();
+    $focus = $actividad1->get_errfield();
 }
 elseif ($actividad1->is_post())
 {
@@ -28,7 +30,7 @@ include_once("src/layout/alerts.php");
 ?>
     <div class="mb-3">
         <label for="titulo" class="form-label">Titulo</label>
-        <input type="text" class="form-control" autofocus id="titulo" name="titulo" maxlength="255" value="<?= get_post_v("titulo"); ?>" />
+        <input type="text" class="form-control" id="titulo" name="titulo" maxlength="255" value="<?= get_post_v("titulo"); ?>" />
     </div>
     <div class="mb-3">
         <label for="director" class="form-label">Director</label>
@@ -55,6 +57,9 @@ include_once("src/layout/alerts.php");
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <script>
+const inputfocus = "<?= $focus ?>"
+document.getElementById(inputfocus).focus()
+
 function number_only(id){
     const element = document.getElementById(id);
     const regex = /[^0-9]/gi;

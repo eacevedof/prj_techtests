@@ -9,6 +9,7 @@ class Actividad1
     private $keys;
 
     private $errors = [];
+    private $errfield = "titulo";
 
     public function __construct(array $post)
     {
@@ -54,20 +55,28 @@ class Actividad1
 
     private function _validate_input()
     {
-        if(!trim($this->_get_post("titulo")))
+        if(!trim($this->_get_post("titulo"))) {
+            $this->errfield = "titulo";
             return $this->errors[] = "El título es obligatorio";
+        }
 
-        if(strlen($this->_get_post("director"))>255)
+        if(strlen($this->_get_post("director"))>255) {
+            $this->errfield = "director";
             return $this->errors[] = "El nombre del director no puede superar los 255 caractéres";
+        }
 
         if(
             $this->_get_post("anio")!=="" &&
             (!is_numeric($this->_get_post("anio")) || strlen($this->_get_post("anio"))<4)
-        )
+        ) {
+            $this->errfield = "anio";
             return $this->errors[] = "El año debe ser entero de 4 dígitos";
+        }
 
-        if(strlen($this->_get_post("pais"))>2)
+        if(strlen($this->_get_post("pais"))>2) {
+            $this->errfield = "pais";
             return $this->errors[] = "El código de país no debe superar los dos caractéres";
+        }
     }
 
     public function save(){
@@ -101,4 +110,6 @@ class Actividad1
     public function is_error(){ return count($this->errors)>0;}
 
     public function get_errors(){return $this->errors;}
+
+    public function get_errfield(){return $this->errfield;}
 }
