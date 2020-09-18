@@ -1,18 +1,17 @@
 <?php
 //http://actividades.dgtlfundraising.com/eduardoacevedo/actividad_1.php
 include("src/libs/bootstrap.php");
-//var_dump($_POST);
 $error = [];
 $ok = "";
 if(!empty($_POST)) {
-   if(isset($_POST["titulo"])) {
+   if(get_post_v("titulo")) {
         $actividad1 = new \Libs\Actions\Actividad1($_POST);
         $r = $actividad1->save();
         $ok = "Los datos se han guardado correctamente.";
         $_POST = [];
    }
    else{
-     $error[] = "Datos incompletos";
+     $error[] = "Datos incompletos. Falta el título";
    }
 }
 ?>
@@ -41,22 +40,22 @@ include("src/layout/layout-top.php");
     ?>
     <div class="mb-3">
         <label for="titulo" class="form-label">Titulo</label>
-        <input type="text" class="form-control" autofocus id="titulo" name="titulo" maxlength="255" >
+        <input type="text" class="form-control" autofocus id="titulo" name="titulo" maxlength="255" value="<?= get_post_v("titulo"); ?>" />
     </div>
     <div class="mb-3">
         <label for="director" class="form-label">Director</label>
-        <input type="text" class="form-control" id="director" name="director" maxlength="255" >
+        <input type="text" class="form-control" id="director" name="director" maxlength="255" value="<?= get_post_v("director"); ?>" />
     </div>
     <div class="mb-3">
         <label for="anio" class="form-label">Año</label>
-        <input type="number" class="form-control" id="anio" name="anio" max="9999" >
+        <input type="number" class="form-control" id="anio" name="anio" max="9999" value="<?= get_post_v("anio"); ?>" />
     </div>
     <div class="mb-3">
         <label for="pais" class="form-label">Pais</label>
         <select class="form-control" id="pais" name="pais">
             <option value="">Select one</option>
         <?php
-        $selected = "";
+        $selected = get_post_v("pais");
         foreach ($paises as $code =>$pais){
         ?>
         <option value="<?= $code?>" <?= ($code==$selected? "selected": "") ?> ><?= $pais ?></option>
