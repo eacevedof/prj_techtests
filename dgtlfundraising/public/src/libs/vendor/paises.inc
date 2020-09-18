@@ -235,4 +235,9 @@ $paises = array (
     "ZM" => "Zambia",
     "ZW" => "Zimbabue"
 );
-?>
+
+function get_countryname($code=""){
+    if(!$code) return "";
+    global $paises;
+    return $paises[$code];
+}
