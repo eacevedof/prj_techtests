@@ -19,3 +19,8 @@ $db->exec("DROP TABLE IF EXISTS `peliculas`;");
 echo "creating table";
 $db->exec($sql);
 echo "<pre>$sql</pre>";
+
+$sql = "select * from peliculas";
+$r = $db->query($sql);
+echo "$sql\n<br/>";
+var_dump($r);
