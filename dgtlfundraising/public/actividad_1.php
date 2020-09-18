@@ -48,7 +48,7 @@ include("src/layout/layout-top.php");
     </div>
     <div class="mb-3">
         <label for="anio" class="form-label">Año</label>
-        <input type="number" class="form-control" id="anio" name="anio" max="9999" value="<?= get_post_v("anio"); ?>" />
+        <input type="text" oninput="number_only(this.id)" class="form-control" id="anio" name="anio" maxlength="4" value="<?= get_post_v("anio"); ?>" />
     </div>
     <div class="mb-3">
         <label for="pais" class="form-label">Pais</label>
@@ -67,6 +67,15 @@ include("src/layout/layout-top.php");
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <script>
+function number_only(id){
+    // Get element by id which passed as parameter within HTML element event
+    var element = document.getElementById(id);
+    // Use numbers only pattern, from 0 to 9
+    var regex = /[^0-9]/gi;
+    // This removes any other character but numbers as entered by user
+    element.value = element.value.replace(regex, "");
+}
+
 const on_submit = (e)=>{
     //alert("on submit")
     const titulo = document.getElementById("titulo")
