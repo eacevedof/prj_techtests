@@ -57,7 +57,7 @@ include("src/layout/layout-top.php");
         <select class="form-control" id="pais" name="pais">
             <option value="">Select one</option>
         <?php
-        $selected = $_POST["pais"] ?? "";
+        $selected = "";
         foreach ($paises as $code =>$pais){
         ?>
         <option value="<?= $code?>" <?= ($code==$selected? "selected": "") ?> ><?= $pais ?></option>
