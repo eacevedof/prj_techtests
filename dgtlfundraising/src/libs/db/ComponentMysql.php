@@ -8,11 +8,32 @@ class ComponentMysql
     private $arErrors;
     private $iAffected;
 
-    public function __construct($arConn=[])
+    public function __construct()
     {
         $this->isError = FALSE;
         $this->arErrors = [];
-        $this->arConn = $arConn;
+        $this->arConn = $this->_get_conn();
+    }
+
+    private function _get_conn()
+    {
+        //prod
+        $config = [
+            "server" =>"mysql128int.srv-hostalia.com",
+            "database" =>"db4050205_eduardoacevedo",
+            "user" =>"u4050205_eduac",
+            "password"=>"qTwLKgvz8me",
+        ];
+        if(APP_ENV==="local")
+        {
+            $config = [
+                "server" =>"localhost",
+                "database" =>"db4050205_eduardoacevedo",
+                "user" =>"root",
+                "password"=>"1234",
+            ];
+        }
+        return $config;
     }
 
     private function get_conn_string()
