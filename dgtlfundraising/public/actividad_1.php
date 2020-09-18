@@ -1,4 +1,5 @@
 <?php
+//http://actividades.dgtlfundraising.com/eduardoacevedo/actividad_1.php
 include("src/libs/bootstrap.php");
 var_dump($_POST);
 $error = "";
@@ -14,7 +15,7 @@ include("src/layout/layout-top.php");
 ?>
 <main class="container">
 <h2> Actividad 1 </h2>
-<form method="post" action="/actividad_1.php" class="row" onsubmit="on_submit(event)">
+<form method="post" class="row" onsubmit="on_submit(e)">
     <div class="mb-3">
         <label for="titulo" class="form-label">Titulo</label>
         <input type="text" class="form-control" id="titulo" name="titulo" maxlength="255">
