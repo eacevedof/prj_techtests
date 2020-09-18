@@ -12,7 +12,7 @@ if(!empty($_POST)) {
         $_POST = [];
    }
    else{
-     $error[] = "Datos in correctos";
+     $error[] = "Datos incompletos";
    }
 }
 ?>
@@ -21,7 +21,7 @@ include("src/layout/layout-top.php");
 ?>
 <main class="container">
 <h2> Actividad 1 </h2>
-<form method="post" class="row" onsubmit="on_submit(e)">
+<form method="post" class="row" onsubmit="on_submit(event)">
     <?php
     if($error){
     ?>
@@ -30,19 +30,18 @@ include("src/layout/layout-top.php");
     </div>
     <?php
     }
-    ?>
-    <?php
+
     if($ok){
-        ?>
-        <div class="alert alert-success" role="alert">
-            <?= $ok; ?>
-        </div>
-        <?php
+    ?>
+    <div class="alert alert-success" role="alert">
+        <?= $ok; ?>
+    </div>
+    <?php
     }
     ?>
     <div class="mb-3">
         <label for="titulo" class="form-label">Titulo</label>
-        <input type="text" class="form-control" id="titulo" name="titulo" maxlength="255" >
+        <input type="text" class="form-control" autofocus id="titulo" name="titulo" maxlength="255" >
     </div>
     <div class="mb-3">
         <label for="director" class="form-label">Director</label>
