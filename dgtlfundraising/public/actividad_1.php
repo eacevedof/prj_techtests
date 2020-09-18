@@ -56,11 +56,8 @@ include_once("src/layout/alerts.php");
 </form>
 <script>
 function number_only(id){
-    // Get element by id which passed as parameter within HTML element event
-    var element = document.getElementById(id);
-    // Use numbers only pattern, from 0 to 9
-    var regex = /[^0-9]/gi;
-    // This removes any other character but numbers as entered by user
+    const element = document.getElementById(id);
+    const regex = /[^0-9]/gi;
     element.value = element.value.replace(regex, "");
 }
 
