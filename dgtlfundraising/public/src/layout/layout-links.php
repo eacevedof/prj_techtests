@@ -1,7 +1,19 @@
+<?php
+$domain="eduardoacevedo/";
+if(APP_ENV==="local") $domain = "";
+
+$texts = [
+  1 => "Insert", "Listado", "Calculadora"
+];
+?>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/actividad_1.php">Insert</a></li>
-        <li class="breadcrumb-item"><a href="/actividad_2.php">Listado</a></li>
-        <li class="breadcrumb-item"><a href="/actividad_3.php">Calculadora</a></li>
+        <?php
+        for($i=1; $i<4; $i++):
+        ?>
+        <li class="breadcrumb-item"><a href="/<?=$domain; ?>actividad_<?=$i;?>.php"><?=$texts[$i];?></a></li>
+        <?php
+        endfor;
+        ?>
     </ol>
 </nav>
