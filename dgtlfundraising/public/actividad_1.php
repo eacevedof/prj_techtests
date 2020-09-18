@@ -1,18 +1,20 @@
 <?php
 //http://actividades.dgtlfundraising.com/eduardoacevedo/actividad_1.php
 include("src/libs/bootstrap.php");
+
+//se usa en alerts.php
 $error = [];
-$ok = "";
-if(!empty($_POST)) {
-   if(trim(get_post_v("titulo"))) {
-        $actividad1 = new \Libs\Actions\Actividad1($_POST);
-        $r = $actividad1->save();
-        $ok = "Los datos se han guardado correctamente.";
-        $_POST = [];
-   }
-   else{
-     $error[] = "Datos incompletos. Falta el título";
-   }
+$success = "";
+
+$actividad1 = new \Libs\Actions\Actividad1($_POST);
+
+$actividad1->save();
+if($actividad1->is_error()){
+    $error = $actividad1->get_errors();
+}
+elseif ($actividad1->is_post())
+{
+    $success = "Los datos se han guardado correctamente.";
 }
 ?>
 <?php
@@ -21,23 +23,9 @@ include("src/layout/layout-top.php");
 <main class="container">
 <h2> Actividad 1 </h2>
 <form method="post" class="row" onsubmit="on_submit(event)">
-    <?php
-    if($error){
-    ?>
-    <div class="alert alert-danger" role="alert">
-        Errores: <?= implode(";",$error); ?>
-    </div>
-    <?php
-    }
-
-    if($ok){
-    ?>
-    <div class="alert alert-success" role="alert">
-        <?= $ok; ?>
-    </div>
-    <?php
-    }
-    ?>
+<?php
+include_once("src/layout/alerts.php");
+?>
     <div class="mb-3">
         <label for="titulo" class="form-label">Titulo</label>
         <input type="text" class="form-control" autofocus id="titulo" name="titulo" maxlength="255" value="<?= get_post_v("titulo"); ?>" />
