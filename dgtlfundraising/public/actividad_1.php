@@ -4,7 +4,7 @@ include("src/libs/bootstrap.php");
 $error = [];
 $ok = "";
 if(!empty($_POST)) {
-   if(get_post_v("titulo")) {
+   if(trim(get_post_v("titulo"))) {
         $actividad1 = new \Libs\Actions\Actividad1($_POST);
         $r = $actividad1->save();
         $ok = "Los datos se han guardado correctamente.";
