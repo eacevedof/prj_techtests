@@ -2,12 +2,12 @@
 include("../src/libs/bootstrap.php");
 var_dump($_POST);
 $error = "";
-if($_POST["titulo"])
-{
-    $actividad1 = new \Libs\Actions\Actividad1();
-
+if(!empty($_POST)) {
+   if (isset($_POST["titulo"])) {
+        $actividad1 = new \Libs\Actions\Actividad1($_POST);
+        $actividad1->save();
+    }
 }
-
 ?>
 <?php
 include("../src/layout/layout-top.php");

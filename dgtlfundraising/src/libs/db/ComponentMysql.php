@@ -28,6 +28,7 @@ class ComponentMysql
         {
             $config = [
                 "server" =>"localhost",
+                "server" =>"127.0.0.1",
                 "database" =>"db4050205_eduardoacevedo",
                 "user" =>"root",
                 "password"=>"1234",
@@ -39,6 +40,7 @@ class ComponentMysql
     private function get_conn_string()
     {
         $arCon["mysql:host"] = (isset($this->arConn["server"])?$this->arConn["server"]:"");
+        $arCon["port"] = "3306";
         $arCon["dbname"] = (isset($this->arConn["database"])?$this->arConn["database"]:"");
         //$arCon["ConnectionPooling"] = (isset($this->arConn["pool"])?$this->arConn["pool"]:"0");
 
@@ -106,6 +108,7 @@ class ComponentMysql
         try
         {
             $sConn = $this->get_conn_string();
+            //var_dump($sConn);die;
             //https://stackoverflow.com/questions/19577056/using-pdo-to-create-table
             $oPdo = new \PDO($sConn,$this->arConn["user"],$this->arConn["password"]
                 ,[\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]);

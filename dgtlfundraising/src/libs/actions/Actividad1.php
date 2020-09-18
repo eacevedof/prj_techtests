@@ -20,7 +20,7 @@ class Actividad1
 
     private function _get_insert_sql()
     {
-        list($titulo,$director,$anio,$pais) = $this->data;
+        list($titulo,$director,$anio,$pais) = array_values($this->data);
         $this->_scape($titulo);
         $this->_scape($director);
         $this->_scape($pais);
