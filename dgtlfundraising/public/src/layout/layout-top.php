@@ -21,3 +21,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
+<?php
+include_once("layout-links.php");
+
