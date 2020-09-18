@@ -24,6 +24,7 @@ class Actividad1
         $this->_scape($titulo);
         $this->_scape($director);
         $this->_scape($pais);
+        $anio = (int) $anio;
 
         $sql = "
         INSERT INTO peliculas (titulo, director, anio, pais)

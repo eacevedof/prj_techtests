@@ -1,5 +1,5 @@
 <?php
-include("../src/libs/bootstrap.php");
+include("src/libs/bootstrap.php");
 var_dump($_POST);
 $error = "";
 if(!empty($_POST)) {
@@ -10,7 +10,7 @@ if(!empty($_POST)) {
 }
 ?>
 <?php
-include("../src/layout/layout-top.php");
+include("src/layout/layout-top.php");
 ?>
 <main class="container">
 <h2> Actividad 1 </h2>
@@ -55,4 +55,4 @@ const on_submit = (e)=>{
 </script>
 </main>
 <?php
-include("../src/layout/layout-bottom.php");
+include("src/layout/layout-bottom.php");
