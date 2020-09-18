@@ -1,15 +1,18 @@
 <?php
 //http://actividades.dgtlfundraising.com/eduardoacevedo/actividad_1.php
 include("src/libs/bootstrap.php");
-var_dump($_POST);
+//var_dump($_POST);
 $error = [];
+$ok = "";
 if(!empty($_POST)) {
    if(isset($_POST["titulo"])) {
         $actividad1 = new \Libs\Actions\Actividad1($_POST);
         $r = $actividad1->save();
+        $ok = "Datos guardados";
+        $_POST = [];
    }
    else{
-
+     $error[] = "Datos in correctos";
    }
 }
 ?>
@@ -19,6 +22,24 @@ include("src/layout/layout-top.php");
 <main class="container">
 <h2> Actividad 1 </h2>
 <form method="post" class="row" onsubmit="on_submit(e)">
+    <?php
+    if($error){
+    ?>
+    <div class="alert alert-danger" role="alert">
+        Errores: <?= implode(";",$error); ?>
+    </div>
+    <?php
+    }
+    ?>
+    <?php
+    if($ok){
+        ?>
+        <div class="alert alert-success" role="alert">
+            <?= $ok; ?>
+        </div>
+        <?php
+    }
+    ?>
     <div class="mb-3">
         <label for="titulo" class="form-label">Titulo</label>
         <input type="text" class="form-control" id="titulo" name="titulo" maxlength="255" value="<?=$_POST["titulo"] ?? "" ?>">
