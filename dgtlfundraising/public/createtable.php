@@ -3,7 +3,7 @@ include("src/libs/bootstrap.php");
 
 
 $sql = "
-CREATE TABLE `peliculas_2` (
+CREATE TABLE `peliculas` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(255) DEFAULT NULL,
   `director` varchar(255) NOT NULL,
@@ -14,4 +14,8 @@ CREATE TABLE `peliculas_2` (
 ";
 
 $db = new \Lig\Db\ComponentMysql();
+echo "droping table peliculas \nn";
+$db->exec("DROP TABLE IF EXISTS `peliculas`;");
+echo "creating table";
 $db->exec($sql);
+echo "<pre>$sql</pre>";
