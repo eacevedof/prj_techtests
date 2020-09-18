@@ -36,13 +36,14 @@ class Actividad1
     public function save(){
         $db = new ComponentMysql();
         $sql = $this->_get_insert_sql();
-        print_r($sql);
+        //print_r($sql);
         $r = $db->exec($sql);
-        print_r($r);
+        //echo "result"; print_r($r);
+        return $r;
     }
 
     public function get_errors()
     {
-
+        return $this->errors;
     }
 }
