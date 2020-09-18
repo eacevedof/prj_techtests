@@ -1,8 +1,7 @@
 <?php
 //http://actividades.dgtlfundraising.com/eduardoacevedo/actividad_2.php
 include("src/libs/bootstrap.php");
-$actividad2 = new \Libs\Actions\Actividad2([]);
-$r = $actividad2->get_peliculas();
+$r = (new \Libs\Actions\Actividad2)->get_peliculas();
 
 include("src/layout/layout-top.php");
 ?>

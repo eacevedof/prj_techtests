@@ -9,8 +9,7 @@ include("src/layout/layout-top.php");
 <?php
 $numero1 = 10;
 $numero2 = 5;
-$calculadora = new \Libs\Actions\Calculadora();
-$calculadora->get($numero1, $numero2);
+(new \Libs\Actions\Calculadora)->get($numero1, $numero2);
 ?>
 </main>
 <?php
