@@ -44,11 +44,11 @@ include_once("src/layout/alerts.php");
             <option value="">Select one</option>
         <?php
         $selected = get_post_v("pais");
-        foreach ($paises as $code =>$pais){
+        foreach ($paises as $code =>$pais):
         ?>
-        <option value="<?= $code?>" <?= ($code==$selected? "selected": "") ?> ><?= $pais ?></option>
+            <option value="<?= $code?>" <?= ($code==$selected? "selected": "") ?> ><?= $pais ?></option>
         <?php
-        }
+        endforeach;
         ?>
         </select>
     </div>
