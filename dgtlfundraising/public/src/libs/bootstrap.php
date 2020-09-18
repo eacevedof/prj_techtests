@@ -1,5 +1,5 @@
 <?php
-define("APP_ENV","local");
+define("APP_ENV","");
 
 include_once("db/ComponentMysql.php");
 include_once("actions/Actividad1.php");

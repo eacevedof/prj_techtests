@@ -1,6 +1,6 @@
 <?php
+//http://actividades.dgtlfundraising.com/eduardoacevedo/createtable.php
 include("src/libs/bootstrap.php");
-
 
 $sql = "
 CREATE TABLE `peliculas` (
