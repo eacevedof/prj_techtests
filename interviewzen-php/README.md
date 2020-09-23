@@ -10,20 +10,21 @@ if ($a == null) {
     echo 'falso';
 }
 
-- verdadero  [ok]
+- verdadero
 
 Question 2
 Resultado de $var: $var = true ? '1' : false ? '2' : '3';
-- '1' [nok] es '2' tiene trampa. Sería: (true ? '1' : false) ? '2' : '3';
+- ~'1' [nok]~ 
+- Es '2' tiene trampa. Sería: (true ? '1' : false) ? '2' : '3';
 
 Question 3
 ¿Que utilidad tiene esta expresión regular?:
 
 preg_replace("/([0-9]{4})\/([0-9]{2})\/([0-9]{2})/i","$3/$2/$1",$result);
 - extrae en $result un formato fecha tipo [yyyy,mm,dd] [nok]
-- Busca en result el patron y lo extrae en las variables ordenadas \$3 \$2 \$1, 1:año, 2:mes, 3:día con estas variables definidas se forma el string de remplazo
-  haciendo un cambio de posicion de los elementos de la fecha
-  Si entra 2021/02/01 saldría 02/02/2021
+- Busca en result el patron y lo extrae en las variables ordenadas \$3 \$2 \$1, 1:año, 2:mes, 3:día con estas variables 
+  definidas se forma el string de remplazo haciendo un cambio de posicion de los elementos de la fecha Si entra 
+  2021/02/01 saldría 02/02/2021
 
 Question 4
 ¿Se ejecutará la llamada al método mysqli_close?
@@ -36,18 +37,19 @@ try {
     mysqli_close($db);
 }
 - si, siempre [ok]
-- si la funcion some_function some_function está definida:
-    - y hay un catch, nunca entra por catch. pasa a finally
+- si la funcion **some_function** está definida:
     - si no hay un catch, pasa a finally
-
+    - y hay un catch, nunca entra por catch. pasa a finally
+```
 Warnings:
 Warning: mysqli_connect(): (HY000/2002): No such file or director
 Warning: mysqli_close() expects parameter 1 to be mysqli, bool given in
-
-Si la función no está definida pero entra por finally
+```
+- Si la función no está definida igual pasa por finally
+```
 Fatal error: Uncaught Error: Call to undefined function some_function()
 Error: Call to undefined function some_function()
-
+```
 En conclusion siempre entra por finally
 
 Question 5
@@ -62,12 +64,13 @@ try {
 catch (\Exception $e){ 
     echo 'EXCEPTION: ' . $e->getMessage();
 }
+```php
+//php5
+Fatal error:  Call to undefined function foo() in
 
-- en php 5 saltaria un error del interprete con funcion no definida y en PHP 7 entraria por la excepcion y se mostraría un mensaje de función no definida [nok]
-- FIX si una función no está definida no se puede capturar la excepcion con catch
-  se mostraría:
-      Fatal error: Uncaught Error: Call to undefined function foo()
-      Error: Call to undefined function foo()
+//php7
+Fatal error:  Uncaught Error: Call to undefined function foo() in
+```
 
 Question 6
 En PHP, ¿ Para que se usa el operador lógico === ?
@@ -84,8 +87,9 @@ Question 7
 
 Question 8
 ¿Qué son los traits? Explícalo con tus propias palabras, indica algún caso de uso en el que estaría bien aplicarlo y posibles contraindicaciones de usar traits.
-- Es una implementación en php que permite emular la multiherencia. Los traits puede que sobrescriban métodos ya existentes. Se usa para extender una funcionalidad sin aplicar herencia.
-Yo los uso para gestionar variables de entorno y logs.  Tengo un trait con cada funcionalidad y lo agrego en la clase según la necesidad. [nok]
+- Es una implementación en php que permite emular la multiherencia. 
+- Los traits puede que sobrescriban métodos ya existentes. 
+- Se usa para extender una funcionalidad sin aplicar herencia ni composición.
 - Caso de uso:
     Tengo una clase que está extendiendo otra y necesito cierta funcionalidad que tengo en otra clase, podría llevar esa funcionalidad a un trait e instanciarla
     en ambas clases 
@@ -108,7 +112,6 @@ $a = 5;
 $b = "4";
 
 echo " $a + $b = " . sum($a, $b);
-- en php 7 daría un error en el interprete porque se ha definido un tipo entero en b y se esta pasando un string "4" [nok]
 - si se usa declare(stryct_types=1):
     Fatal error: Uncaught TypeError: Argument 2 passed to sum() must be of the type int, string given
     TypeError: Argument 2 passed to sum() must be of the type int, string given, called
@@ -117,37 +120,39 @@ sino:
 
 Question 10
 ¿Qué son los estándares PSR?
-- son en su mayoría estructuras de arquitectura de software que garantizan una uniformidad de interacción con estas ya que se basan en interfaces.  
-Esto hace posible cambiar ciertas piezas del código por otras siempre y cuando cumplan el stándar [nok]
-
 - Son especificaciones de código basadas en conceptos de programación ya probados cuya intención es proveer interoperabilidad entre componentes. 
-Estas recomendaciones permiten escribir codigo de calidad y mantenimble a largo plazo.
+- Estas recomendaciones permiten escribir codigo de calidad y mantenimble a largo plazo.
+- Facilitan la sustitución de componentes siempre y cuando cumplan las especificaciones.
 
 Question 11
 Define un servicio en Symfony llamado foo (utiliza el namespace que quieras para la clase Foo) 
 que tenga como dependencia el servicio de Logger de Symfony, y que no se instancie hasta que no se utilice. 
 
+```php`
+# config/services.yaml
+services:
+    App\Services\FooService:
+        lazy: true
+
 namespace App\Services;
 
-use Symfony\Logger;
+use Psr\Log\LoggerInterface;
 
 class FooService{
+
     private $logger;
-    
-    private function _init(){
-        if(!$this->logger) $this->logger = new Logger();           
-    }
-    
-    public function log($content)
+
+    public function __construct(LoggerInterface $logger)
     {
-        $this->_init();
-        $this->logger->log($content)
-    }   
+        $this->logger = $logger;
+    } 
 }
 
 $service = new FooService();
 $service->log("some content")
-- creo que [nok]
+
+
+
 
 namespace App\Services;
 
@@ -178,7 +183,7 @@ class XxxService{
     ->some_method()->method_withlog();
 
 https://stackoverflow.com/questions/63924096/define-a-service-with-lazy-loading-logger-in-symfony
-
+``
 
 Question 12
 Define qué es la compiler pass y un ejemplo de para qué se puede utilizar.
