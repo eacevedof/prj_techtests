@@ -156,11 +156,14 @@ https://stackoverflow.com/questions/63924096/define-a-service-with-lazy-loading-
 
 Question 12
 Define qué es la compiler pass y un ejemplo de para qué se puede utilizar.
-- Candidate skipped question [nok]
-- Es una clase que implementa CompilerPassInterface y que permite manipular las configuraciones iniciales de los servicios que se han compilado
-Por ejemplo en varios entornos de despliegue, me intersa que en mis servicios se inyecte siempre otro servicio de depuración pero solo si no se está en producción. Para este caso 
-me intersaría inyectar otro servicio similar pero que en lugar de lanzara el mensaje por pantalla lo envie a una cola de mensajería.
-En este ejemplo se visualiza como inyectar al servicio MailerTransportChain los servicios con tag name app.mail_transport llamando a su método addTransport
+- Es una clase que implementa CompilerPassInterface y que permite manipular las configuraciones iniciales de los servicios 
+que se han compilado Por ejemplo en varios entornos de despliegue, me intersa que en mis servicios se inyecte siempre otro 
+servicio de depuración pero solo si no se está en producción. Para este caso me intersaría inyectar otro servicio similar 
+pero que en lugar de lanzara el mensaje por pantalla lo envie a una cola de mensajería.
+
+En este ejemplo se visualiza como inyectar al servicio MailerTransportChain los servicios con tag name app.mail_transport 
+llamando a su método addTransport
+
 https://symfony.com/index.php/doc/3.1/service_container/tags.html
 Aqui se crearía el compailer pass personalizado: src/AppBundle/DependencyInjection/Compiler/MailTransportPass.php
 
@@ -170,17 +173,16 @@ Question 13
 
 Question 14
 Explica como funciona el late binding en PHP
-- Candidate skipped question [nok]
-- El compilador comprueba errores y si no los hay entonces asigna los valores a las variables y ejecuta el programa, esto es el early binding
-El late binding en php se hace con static y permite rescribir atributos en una clase estática en tiempo de ejecución
-https://youtu.be/jClyQktD4ow
+- El compilador comprueba errores y si no los hay entonces asigna los valores a las variables y ejecuta el programa, 
+esto es el early binding.  El late binding en php se hace con static y permite rescribir atributos en una clase estática 
+en tiempo de ejecución https://youtu.be/jClyQktD4ow
 
 Question 15
 ¿Qué es lo que se almacena en aceleradores de caché como OPcache o APC?
-- Se guarda contenido serializado y minificado para su posterior reutilización sin tener que recompilar el contenido.
-Emula el contenido estático [nok]
- - OPcache mejora el rendimiento de PHP almacenando el código de bytes de un script precompilado en la memoria compartida, 
- eliminando así la necesidad de que PHP cargue y analice los script en cada petición.
-- APC Su objetivo es el de proporcionar un marco robusto, libre y abierto para optimizar código de PHP intermedio mediante 
+- Guardan en bytecode los script pre compilados.
+- OPcache mejora el rendimiento de PHP almacenando el código de bytes de un script precompilado en la memoria compartida, 
+eliminando así la necesidad de que PHP cargue y analice los script en cada petición.
+
+- APC (antiguo) Su objetivo es el de proporcionar un marco robusto, libre y abierto para optimizar código de PHP intermedio mediante 
 el almacenamiento en caché.
 </pre>
