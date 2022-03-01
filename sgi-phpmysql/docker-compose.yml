@@ -3,7 +3,8 @@ version: "3.8"
 
 services:
   web:
-    image: php:7.3-apache
+    build:
+      context: .
     hostname: hostapache
     container_name: cont-apache
     ports:

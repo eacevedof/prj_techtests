@@ -22,7 +22,8 @@ class Site
      */
     public function getDefaultAction()
     {
-        return $this->$defaultAction;
+        //@fix se llamaba con $defaultAction
+        return $this->defaultAction;
     }
     /**
      * Rederizar la vista.

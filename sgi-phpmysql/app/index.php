@@ -25,6 +25,7 @@ if ( !empty( $_GET[ "action" ] ) ) {
 } else {
     $action = "action".ucwords( $ctrl->getDefaultAction() );
 }
+
 if ( !empty( $ctrl ) ) {
 
     if ( method_exists( $ctrl, $action ) ) {
