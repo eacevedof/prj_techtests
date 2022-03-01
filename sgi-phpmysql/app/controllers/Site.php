@@ -25,6 +25,7 @@ class Site
         //@fix se llamaba con $defaultAction
         return $this->defaultAction;
     }
+
     /**
      * Rederizar la vista.
      * @param string $view Nombre de la vista.
@@ -34,15 +35,22 @@ class Site
     {
         include( __DIR__ . "/../views/" .$view );
     }
+
     /**
      * Página principal.
      */
     public function actionIndex()
     {
         $productos = Producto::findAll();
-        
         $this->renderView( "index.php", [ "productos" => $productos ] );
     }
+
+    public function actionNewProduct()
+    {
+
+        $this->renderView( "new-producto.php");
+    }
+
     /**
      * Vista de un producto.
      */
@@ -117,6 +125,7 @@ class Site
         
         new \Exception( "Producto not found." );
     }
+
     /**
      * Exportar el XML con los productos.
      */

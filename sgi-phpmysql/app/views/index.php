@@ -9,7 +9,7 @@
     </head>
     <body>
         <div class="container">
-            <h3>Productos <a class="btn btn-success" href="../index.php" target="_blank">Nuevo producto</a> <a class="btn btn-primary" href="../index.php" target="_blank">XML</a></h3>
+            <h3>Productos <a class="btn btn-success" href="/newProduct" target="_blank">Nuevo producto</a> <a class="btn btn-primary" href="../index.php" target="_blank">XML</a></h3>
             
             <table class="table table-striped">
                 <thead>
