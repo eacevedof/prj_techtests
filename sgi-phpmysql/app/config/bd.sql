@@ -25,18 +25,18 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `productos_01`
 --
 CREATE TABLE `productos_01` (
-    `id` int(6) UNSIGNED NOT NULL,
-    `nombre` varchar(160) DEFAULT NULL,
-    `descripcion` varchar(258) DEFAULT NULL,
-    `imagen` longblob,
-    `categoria_id` int(6) DEFAULT NULL,
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+    `id` INT(6) UNSIGNED NOT NULL,
+    `nombre` VARCHAR(160) DEFAULT NULL,
+    `descripcion` VARCHAR(258) DEFAULT NULL,
+    `imagen` LONGBLOB,
+    `categoria_id` INT(6) DEFAULT NULL
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `categorias` (
-    `id` int(6) UNSIGNED NOT NULL,
-    `nombre` varchar(160) DEFAULT NULL,
-    `descripcion` varchar(258) DEFAULT NULL,
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+    `id` INT(6) UNSIGNED NOT NULL,
+    `nombre` VARCHAR(160) DEFAULT NULL,
+    `descripcion` VARCHAR(258) DEFAULT NULL
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 --
 -- Índices para tablas volcadas
 --
@@ -48,11 +48,11 @@ ALTER TABLE `productos_01` ADD PRIMARY KEY (`id`);
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
-ALTER TABLE `categorias` MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `categorias` MODIFY `id` INT(6) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `productos_01`
 --
-ALTER TABLE `productos_01` MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `productos_01` MODIFY `id` INT(6) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
