@@ -207,7 +207,8 @@ class Producto extends ActiveRecord
                 $xml->writeAttribute("id", $producto->getId());
                 $xml->writeElement("nombre", $producto->getNombre());
                 $xml->writeElement("descripcion", $producto->getDescripcion());
-                $xml->writeElement("imagen", BASE_URL."/productos/{$producto->getId()}?image=1");
+                $urlImagen = $producto->getImagen() ? BASE_URL."/productos/{$producto->getId()}?image=1": "";
+                $xml->writeElement("imagen", $urlImagen);
             $xml->endElement();
         }
         $xml->endElement();
@@ -225,7 +226,8 @@ class Producto extends ActiveRecord
             $xml->writeAttribute("id", $this->getId());
             $xml->writeElement("nombre", $this->getNombre());
             $xml->writeElement("descripcion", $this->getDescripcion());
-            $xml->writeElement("imagen", BASE_URL."/productos/{$this->getId()}?image=1");
+            $urlImagen = $this->getImagen() ? BASE_URL."/productos/{$this->getId()}?image=1": "";
+            $xml->writeElement("imagen", $urlImagen);
         $xml->endElement();
         return $xml->outputMemory();
     }

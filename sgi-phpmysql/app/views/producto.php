@@ -23,7 +23,7 @@
                     <input type="hidden" name="action" value="save" />
                     <div class="form-group">
                         <label for="nombre" class="control-label">Nombre</label>
-                        <input class="form-control" maxlength="162" type="text" id="nombre" name="nombre" value="<?= htmlentities( $models[ "producto" ]->getNombre() ) ?>" />
+                        <input class="form-control" autofocus maxlength="162" type="text" id="nombre" name="nombre" value="<?= htmlentities( $models[ "producto" ]->getNombre() ) ?>" />
                     </div>
                     <div class="form-group">
                         <label for="descripcion" class="control-label">Descripción</label>
