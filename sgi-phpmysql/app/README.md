@@ -30,4 +30,4 @@ DocumentRoot: C:\xampp\htdocs
 - Añadir categoría a los productos (se permite seleccionar de entre las categorías existentes)
 - Permitir exportar un único producto a xml  ✅
 - Añadir confirmación al eliminar un producto ✅
-- Hacer que la imagen no sea obligatoria y permitir eliminar la imagen de un producto ya existente
+- Hacer que la imagen no sea obligatoria y permitir eliminar la imagen de un producto ya existente ✅
