@@ -45,12 +45,6 @@ class Site
         $this->renderView( "index.php", [ "productos" => $productos ] );
     }
 
-    public function actionNewProduct()
-    {
-
-        $this->renderView( "new-producto.php");
-    }
-
     /**
      * Vista de un producto.
      */
@@ -69,9 +63,19 @@ class Site
                 
                 header( "Location: /" );
             } else {
-                throw new \Excetion( "Producto no encontrado." );
+                //@eaf typo exception
+                throw new \Exception( "Producto no encontrado." );
             }
-        } else {
+        }
+        elseif ( $method == "xml" ) {
+            if ( !empty( $producto ) ) {
+                $this->responseXml($producto->exportEntityInXml());
+            } else {
+                //@eaf typo exception
+                throw new \Exception( "Producto no encontrado." );
+            }
+        }
+        else {
             $headers = getallheaders();
             if ( in_array( $headers[ "Accept" ], [ "image/jpg", "image/jpeg", "image/png" ] ) || !empty( $_GET[ "image" ] ) ) {
                 if ( !empty( $producto ) ) {
@@ -102,7 +106,8 @@ class Site
                 if ( !empty( $producto ) ) {
                     if ( !empty( $_POST[ "action" ] ) && $_POST[ "action" ] == "save" ) {
                         $producto->setNombre( $_POST[ "nombre" ] );
-                        Producto::setDescripcion( $_POST[ "descripcion" ] );
+                        // @eaf no se debe usar el metodo estatico
+                        $producto->setDescripcion( $_POST[ "descripcion" ] );
                         if ( !empty( $_FILES[ "imagen" ][ "tmp_name" ] ) && in_array( $_FILES[ "imagen" ][ "type" ], [ "image/jpg", "image/jpeg", "image/png" ] ) ) {
                             $producto->setImagen( base64_encode( file_get_contents( $_FILES[ "imagen" ][ "tmp_name" ] ) ) );
                         }
@@ -115,7 +120,8 @@ class Site
                         $this->renderView( "producto.php", [ "producto" => $producto ] );
                     }
                 } else {
-                    throw new \Excetion( "Producto no encontrado." );
+                    // @eaf typo
+                    throw new \Exception( "Producto no encontrado." );
                 }
 
                 return;
@@ -126,16 +132,10 @@ class Site
         new \Exception( "Producto not found." );
     }
 
-    /**
-     * Exportar el XML con los productos.
-     */
-    public function actionXml()
-    {
-        $content = Producto::exportXML();
-        
+    private function responseXml($content) {
         header( 'Content-Description: File Transfer');
         header( 'Content-Type: application/xml' );
-        header( 'Content-Disposition: attachment; filename=productos.xml' ); 
+        header( 'Content-Disposition: attachment; filename=productos.xml' );
         header( 'Content-Transfer-Encoding: binary');
         header( 'Connection: Keep-Alive');
         header( 'Expires: 0');
@@ -144,5 +144,14 @@ class Site
         header( 'Content-Length: '.strlen( $content ) );
         echo $content;
         exit;
+    }
+
+    /**
+     * Exportar el XML con los productos.
+     */
+    public function actionXml()
+    {
+        $content = Producto::exportXML();
+        $this->responseXml($content);
     }
 }

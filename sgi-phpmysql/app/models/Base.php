@@ -1,15 +1,7 @@
 <?php
 namespace models;
 
-use models\api\ActiveRecord;
-
-
-/**
- * Clase producto.
- * 
- * @author obarcia
- */
-class Producto extends ActiveRecord
+abstract class Base
 {
     /**
      * Identificador.
@@ -18,7 +10,7 @@ class Producto extends ActiveRecord
     private $id;
     /**
      * Nombre.
-     * @var string 
+     * @var string
      */
     private $nombre;
     /**
@@ -26,11 +18,7 @@ class Producto extends ActiveRecord
      * @var string
      */
     private $descripcion;
-    /**
-     * Contenido de la imagen en Base64.
-     * @var string
-     */
-    private $imagen;
+
 
     // ***************************************************
     // GETTER & SETTER
@@ -58,15 +46,6 @@ class Producto extends ActiveRecord
     public function setDescripcion( $descripcion )
     {
         $this->descripcion = $descripcion;
-    }
-    public function getImagen()
-    {
-        return $this->imagen;
-    }
-    public function setImagen( $imagen )
-    {
-        //@eaf doble dolar
-        $this->imagen = $imagen;
     }
 
     /**
@@ -98,14 +77,13 @@ class Producto extends ActiveRecord
         if ( $this->validate() ) {
             $params = [];
             if ( empty( $this->id ) ) {
-                $stmt = self::getDb()->prepare( "INSERT INTO ".self::getTablename()." (nombre, descripcion, imagen) VALUES (:nombre, :descripcion, :imagen)" );
+                $stmt = self::getDb()->prepare( "INSERT INTO ".self::getTablename()." (nombre, descripcion) VALUES (:nombre, :descripcion)" );
             } else {
                 $stmt = self::getDb()->prepare( "UPDATE ".self::getTablename()." SET nombre = :nombre, descripcion = :descripcion, imagen = :imagen WHERE id = :id" );
                 $params[ "id" ] = $this->id;
             }
             $params[ "nombre" ] = $this->nombre;
             $params[ "descripcion" ] = $this->descripcion;
-            $params[ "imagen" ] = $this->imagen;
             if ( $stmt->execute( $params ) ) {
                 $this->id = self::getDb()->lastInsertId();
 
@@ -114,7 +92,7 @@ class Producto extends ActiveRecord
                 return false;
             }
         }
-        
+
         return false;
     }
     /**
@@ -133,6 +111,7 @@ class Producto extends ActiveRecord
             }
         }
     }
+
     /**
      * Nombre de la tabla.
      * @return string Nombre de la tabla.
@@ -141,6 +120,7 @@ class Producto extends ActiveRecord
     {
         return "Productos_01";
     }
+
     /**
      * Obtener un registro.
      * @param integer $id Identificador del registro.
@@ -161,7 +141,7 @@ class Producto extends ActiveRecord
                 return $p;
             }
         }
-        
+
         return null;
     }
 
@@ -171,7 +151,7 @@ class Producto extends ActiveRecord
     public static function findAll()
     {
         $list = [];
-        
+
         $stmt = self::getDb()->query( "SELECT * FROM ".self::getTablename()." ORDER BY id" );
         $result = $stmt->fetchAll( \PDO::FETCH_OBJ );
         if ( !empty( $result ) ) {
@@ -181,11 +161,11 @@ class Producto extends ActiveRecord
                 $p->setNombre( $r->nombre );
                 $p->setDescripcion( $r->descripcion );
                 $p->setImagen( $r->imagen );
-                
+
                 $list[] = $p;
             }
         }
-        
+
         return $list;
     }
 
@@ -204,10 +184,9 @@ class Producto extends ActiveRecord
         $productos = self::findAll();
         foreach ($productos as $producto) {
             $xml->startElement("producto");
-                $xml->writeAttribute("id", $producto->getId());
-                $xml->writeElement("nombre", $producto->getNombre());
-                $xml->writeElement("descripcion", $producto->getDescripcion());
-                $xml->writeElement("imagen", BASE_URL."/productos/{$producto->getId()}?image=1");
+            $xml->writeAttribute("id", $producto->getId());
+            $xml->writeElement("nombre", $producto->getNombre());
+            $xml->writeElement("descripcion", $producto->getDescripcion());
             $xml->endElement();
         }
         $xml->endElement();
@@ -222,10 +201,9 @@ class Producto extends ActiveRecord
         $xml->setIndentString("	");
         $xml->startDocument("1.0", "UTF-8");
         $xml->startElement("producto");
-            $xml->writeAttribute("id", $this->getId());
-            $xml->writeElement("nombre", $this->getNombre());
-            $xml->writeElement("descripcion", $this->getDescripcion());
-            $xml->writeElement("imagen", BASE_URL."/productos/{$this->getId()}?image=1");
+        $xml->writeAttribute("id", $this->getId());
+        $xml->writeElement("nombre", $this->getNombre());
+        $xml->writeElement("descripcion", $this->getDescripcion());
         $xml->endElement();
         return $xml->outputMemory();
     }

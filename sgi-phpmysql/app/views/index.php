@@ -9,7 +9,15 @@
     </head>
     <body>
         <div class="container">
-            <h3>Productos <a class="btn btn-success" href="/newProduct" target="_blank">Nuevo producto</a> <a class="btn btn-primary" href="../index.php" target="_blank">XML</a></h3>
+            <h3>
+              <a class="link" href="/">Productos</a>
+<!--
+@eaf
+  convierto a friendly url y agrego a productos un enlace para refresh y apunto al metodo principal actionProductos
+-->
+              <a class="btn btn-success" href="/productos">Nuevo producto</a>
+              <a class="btn btn-primary" href="/xml" target="_blank">XML</a>
+            </h3>
             
             <table class="table table-striped">
                 <thead>
@@ -32,6 +40,7 @@
                                 <td>
                                     <a class="btn btn-primary" href="/productos/<?= $p->getId() ?>">Editar</a>
                                     <a class="btn btn-danger" href="/productos/<?= $p->getId() ?>/delete">Eliminar</a>
+                                    <a class="btn btn-dark" href="/productos/<?= $p->getId() ?>/xml">Xml</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

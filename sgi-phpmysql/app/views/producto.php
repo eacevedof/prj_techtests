@@ -23,7 +23,7 @@
                     <input type="hidden" name="action" value="save" />
                     <div class="form-group">
                         <label for="nombre" class="control-label">Nombre</label>
-                        <input class="form-control" maxlength="160" type="text" id="nombre" name="nombre" value="<?= htmlentities( $models[ "producto" ]->getNombre() ) ?>" />
+                        <input class="form-control" maxlength="162" type="text" id="nombre" name="nombre" value="<?= htmlentities( $models[ "producto" ]->getNombre() ) ?>" />
                     </div>
                     <div class="form-group">
                         <label for="descripcion" class="control-label">Descripción</label>
@@ -31,7 +31,10 @@
                     </div>
                     <div class="form-group">
                         <label for="imagen" class="control-label">Imagen</label>
-                        <input class="form-control" id="imagen" name="imagen" type="file" />
+<!--
+@eaf solo permito la seleccion solo de jpg y png
+-->
+                        <input class="form-control" id="imagen" name="imagen" type="file" accept="image/png, image/jpeg, image/jpeg" />
                     </div>
                     <button type="submit" class="btn btn-success">Guardar</button>
                 </form>

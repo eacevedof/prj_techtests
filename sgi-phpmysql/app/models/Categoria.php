@@ -3,13 +3,12 @@ namespace models;
 
 use models\api\ActiveRecord;
 
-
 /**
  * Clase producto.
  * 
  * @author obarcia
  */
-class Producto extends ActiveRecord
+class Categoria extends ActiveRecord
 {
     /**
      * Identificador.
@@ -26,11 +25,7 @@ class Producto extends ActiveRecord
      * @var string
      */
     private $descripcion;
-    /**
-     * Contenido de la imagen en Base64.
-     * @var string
-     */
-    private $imagen;
+
 
     // ***************************************************
     // GETTER & SETTER
@@ -144,7 +139,7 @@ class Producto extends ActiveRecord
     /**
      * Obtener un registro.
      * @param integer $id Identificador del registro.
-     * @return \models\Producto Instancia del registro o null si no lo encuentra.
+     * @return \models\Categoria Instancia del registro o null si no lo encuentra.
      */
     public static function findOne( $id )
     {
@@ -152,7 +147,7 @@ class Producto extends ActiveRecord
         if ( $stmt->execute( [ "id" => $id ] ) ) {
             $result = $stmt->fetch( \PDO::FETCH_OBJ );
             if ( !empty( $result ) ) {
-                $p = new Producto();
+                $p = new Categoria();
                 $p->setId( $result->id );
                 $p->setNombre( $result->nombre );
                 $p->setDescripcion( $result->descripcion );
@@ -176,7 +171,7 @@ class Producto extends ActiveRecord
         $result = $stmt->fetchAll( \PDO::FETCH_OBJ );
         if ( !empty( $result ) ) {
             foreach ( $result as $r ) {
-                $p = new Producto();
+                $p = new Categoria();
                 $p->setId( $r->id );
                 $p->setNombre( $r->nombre );
                 $p->setDescripcion( $r->descripcion );
@@ -207,26 +202,11 @@ class Producto extends ActiveRecord
                 $xml->writeAttribute("id", $producto->getId());
                 $xml->writeElement("nombre", $producto->getNombre());
                 $xml->writeElement("descripcion", $producto->getDescripcion());
-                $xml->writeElement("imagen", BASE_URL."/productos/{$producto->getId()}?image=1");
+                $xml->writeElement("imagen", "http://localhost:8080/productos/{$producto->getId()}?image=1");
             $xml->endElement();
         }
         $xml->endElement();
         return $xml->outputMemory();
     }
 
-    public function exportEntityInXml()
-    {
-        $xml = new \XMLWriter();
-        $xml->openMemory();
-        $xml->setIndent(true);
-        $xml->setIndentString("	");
-        $xml->startDocument("1.0", "UTF-8");
-        $xml->startElement("producto");
-            $xml->writeAttribute("id", $this->getId());
-            $xml->writeElement("nombre", $this->getNombre());
-            $xml->writeElement("descripcion", $this->getDescripcion());
-            $xml->writeElement("imagen", BASE_URL."/productos/{$this->getId()}?image=1");
-        $xml->endElement();
-        return $xml->outputMemory();
-    }
 }
