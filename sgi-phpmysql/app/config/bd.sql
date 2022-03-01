@@ -19,39 +19,41 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bd_productos`
 --
-
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `productos_01`
 --
-
 CREATE TABLE `productos_01` (
-  `id` int(6) UNSIGNED NOT NULL,
-  `nombre` varchar(160) DEFAULT NULL,
-  `descripcion` varchar(258) DEFAULT NULL,
-  `imagen` longblob
+    `id` int(6) UNSIGNED NOT NULL,
+    `nombre` varchar(160) DEFAULT NULL,
+    `descripcion` varchar(258) DEFAULT NULL,
+    `imagen` longblob,
+    `categoria_id` int(6) DEFAULT NULL,
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `categorias` (
+    `id` int(6) UNSIGNED NOT NULL,
+    `nombre` varchar(160) DEFAULT NULL,
+    `descripcion` varchar(258) DEFAULT NULL,
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 --
 -- Índices para tablas volcadas
 --
-
+ALTER TABLE `categorias` ADD PRIMARY KEY (`id`);
 --
 -- Indices de la tabla `productos_01`
 --
-ALTER TABLE `productos_01`
-  ADD PRIMARY KEY (`id`);
-
+ALTER TABLE `productos_01` ADD PRIMARY KEY (`id`);
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
-
+ALTER TABLE `categorias` MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `productos_01`
 --
-ALTER TABLE `productos_01`
-  MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `productos_01` MODIFY `id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
