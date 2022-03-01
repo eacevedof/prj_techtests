@@ -35,10 +35,35 @@
 @eaf solo permito la seleccion solo de jpg y png
 -->
                         <input class="form-control" id="imagen" name="imagen" type="file" accept="image/png, image/jpeg, image/jpeg" />
+                      <?php
+                      if ($models["producto"]->getImagen()):
+                        $id = $models["producto"]->getId();
+                        $urlImagen = "/productos/{$id}?image=1";
+                      ?>
+                        <img src="<?=$urlImagen?>"/>
+                        <a class="btn btn-dark" href="/productos/<?=$id?>/img-remove">Eliminar imagen</a>
+                      <?
+                      endif;
+                      ?>
                     </div>
                     <button type="submit" class="btn btn-success">Guardar</button>
                 </form>
             <?php endif; ?>
         </div>
+        <script>
+          function deleteConfirm(url){
+            Swal.fire({
+              title: "¿Deseas continuar con la eliminación?",
+              showCancelButton: true,
+              cancelButtonText: "Cancelar",
+              confirmButtonText: "Continuar",
+              confirmButtonColor: "red",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location = url
+              }
+            })
+          }
+        </script>
     </body>
 </html>

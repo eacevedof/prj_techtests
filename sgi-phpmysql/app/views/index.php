@@ -40,8 +40,9 @@ convierto a friendly url y agrego a productos un enlace para refresh y apunto al
                             <td>
                               <?
                               if ($p->getImagen()):
+                                $urlImagen = "/productos/{$p->getId()}?image=1";
                               ?>
-                              <img src="/productos/<?= $p->getId() ?>?image=1" />
+                              <img src="<?=$urlImagen?>"/>
                               <?
                               endif;
                               ?>
@@ -62,19 +63,19 @@ convierto a friendly url y agrego a productos un enlace para refresh y apunto al
         </table>
     </div>
     <script>
-      function deleteConfirm(url){
-        Swal.fire({
-          title: "¿Deseas continuar con la eliminación?",
-          showCancelButton: true,
-          cancelButtonText: "Cancelar",
-          confirmButtonText: "Continuar",
-          confirmButtonColor: "red",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location = url
-          }
-        })
-      }
+    function deleteConfirm(url){
+      Swal.fire({
+        title: "¿Deseas continuar con la eliminación?",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Continuar",
+        confirmButtonColor: "red",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location = url
+        }
+      })
+    }
     </script>
     </body>
 </html>
