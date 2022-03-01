@@ -29,5 +29,5 @@ DocumentRoot: C:\xampp\htdocs
 - Permitir crear categorías con nombre y descripción (vista con listado de categorías, crear, editar y eliminar categorías)
 - Añadir categoría a los productos (se permite seleccionar de entre las categorías existentes)
 - Permitir exportar un único producto a xml  ✅
-- Añadir confirmación al eliminar un producto 
+- Añadir confirmación al eliminar un producto ✅
 - Hacer que la imagen no sea obligatoria y permitir eliminar la imagen de un producto ya existente

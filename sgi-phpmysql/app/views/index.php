@@ -37,7 +37,15 @@ convierto a friendly url y agrego a productos un enlace para refresh y apunto al
                             <td><?= htmlentities( $p->getId() ) ?></td>
                             <td><?= htmlentities( $p->getNombre() ) ?></td>
                             <td><?= htmlentities( $p->getDescripcion() ) ?></td>
-                            <td><img src="/productos/<?= $p->getId() ?>?image=1" /></td>
+                            <td>
+                              <?
+                              if ($p->getImagen()):
+                              ?>
+                              <img src="/productos/<?= $p->getId() ?>?image=1" />
+                              <?
+                              endif;
+                              ?>
+                            </td>
                             <td>
                                 <a class="btn btn-primary" href="/productos/<?= $p->getId() ?>">Editar</a>
                                 <button type="button" class="btn btn-danger" onclick="deleteConfirm(`/productos/<?= $p->getId() ?>/delete`)">
