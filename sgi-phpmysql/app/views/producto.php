@@ -40,7 +40,7 @@
                         $urlImagen = "/productos/{$id}?image=1";
                       ?>
                         <img src="<?=$urlImagen?>"/>
-                        <button type="button" class="btn btn-danger" onclick="deleteConfirm(`/productos/<?=$id?>/img-remove`)">
+                        <button type="button" class="btn btn-danger" onclick="deleteConfirm(`/productos/<?=$id?>/eliminar-imagen`)">
                           Eliminar imagen
                         </button>
                       <?

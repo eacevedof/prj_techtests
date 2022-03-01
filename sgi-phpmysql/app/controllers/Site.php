@@ -50,8 +50,8 @@ class Site
      */
     public function actionProductos()
     {
-        if ( !empty( $_GET[ "id" ] ) ) {
-            $producto = Producto::findOne( $_GET[ "id" ] );
+        if ($id = ($_GET[ "id" ] ?? "")) {
+            $producto = Producto::findOne($id);
         }
         
         $method = ( !empty( $_GET[ "method" ] ) ? $_GET[ "method" ] : "" );
@@ -68,12 +68,13 @@ class Site
             }
         }
         elseif ( $method == "xml" ) {
-            if ( !empty( $producto ) ) {
-                $this->responseXml($producto->exportEntityInXml());
-            } else {
-                //@eaf typo exception
-                throw new \Exception( "Producto no encontrado." );
-            }
+            if (!$producto) throw new \Exception( "Producto no encontrado." );
+            $this->responseXml($producto->exportEntityInXml());
+        }
+        elseif ( $method == "eliminar-imagen" ) {
+            if (!$producto) throw new \Exception( "Producto no encontrado." );
+            if (!$producto->eliminarImagen()) throw new \Exception( "No se ha podido eliminar la imagen" );
+            header("Location: /productos/{$id}");
         }
         else {
             $headers = getallheaders();

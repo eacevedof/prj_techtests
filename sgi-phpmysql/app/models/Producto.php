@@ -231,4 +231,15 @@ class Producto extends ActiveRecord
         $xml->endElement();
         return $xml->outputMemory();
     }
+
+    public function eliminarImagen()
+    {
+        if (!$this->id) return false;
+
+        $tableName = self::getTablename();
+        $stmt = self::getDb()->prepare( "UPDATE {$tableName} SET imagen = :imagen WHERE id = :id" );
+        $params[ "id" ] = $this->id;
+        $params[ "imagen" ] = null;
+        return $stmt->execute($params);
+    }
 }
