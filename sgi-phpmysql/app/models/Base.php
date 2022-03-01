@@ -9,17 +9,17 @@ abstract class Base extends ActiveRecord
      * Identificador.
      * @var integer
      */
-    private $id;
+    protected $id;
     /**
      * Nombre.
      * @var string
      */
-    private $nombre;
+    protected $nombre;
     /**
      * Descripción.
      * @var string
      */
-    private $descripcion;
+    protected $descripcion;
 
 
     // ***************************************************
@@ -29,10 +29,12 @@ abstract class Base extends ActiveRecord
     {
         return $this->id;
     }
+    
     public function setId( $id )
     {
         $this->id = $id;
     }
+    
     public function getNombre()
     {
         return $this->nombre;
@@ -56,20 +58,18 @@ abstract class Base extends ActiveRecord
      */
     public function validate()
     {
+        //el nombre es olbigatorio siempre
+        if (!trim($this->nombre)) return false;
+
         //Nombre: máximo 160 caracteres en UTF‐8
-        if (strlen(utf8_encode($this->nombre))>160) {
-            return false;
-        }
+        if (strlen(utf8_encode($this->nombre))>160) return false;
 
         //Descripción: máximo 258 caracteres en UTF‐8
-        if (strlen(utf8_encode($this->descripcion))>258) {
-            return false;
-        }
+        if (strlen(utf8_encode($this->descripcion))>258) return false;
 
         return true;
     }
-
-
+    
     /**
      * Guardar el registro.
      * @return boolean true si la operación fué correcta, false en caso contrario.
@@ -79,9 +79,9 @@ abstract class Base extends ActiveRecord
         if ( $this->validate() ) {
             $params = [];
             if ( empty( $this->id ) ) {
-                $stmt = self::getDb()->prepare( "INSERT INTO ".self::getTablename()." (nombre, descripcion) VALUES (:nombre, :descripcion)" );
+                $stmt = self::getDb()->prepare( "INSERT INTO ".static::getTablename()." (nombre, descripcion) VALUES (:nombre, :descripcion)" );
             } else {
-                $stmt = self::getDb()->prepare( "UPDATE ".self::getTablename()." SET nombre = :nombre, descripcion = :descripcion, imagen = :imagen WHERE id = :id" );
+                $stmt = self::getDb()->prepare( "UPDATE ".static::getTablename()." SET nombre = :nombre, descripcion = :descripcion WHERE id = :id" );
                 $params[ "id" ] = $this->id;
             }
             $params[ "nombre" ] = $this->nombre;
@@ -104,7 +104,7 @@ abstract class Base extends ActiveRecord
     public function delete()
     {
         if ( !empty( $this->id ) ) {
-            $stmt = self::getDb()->prepare( "DELETE FROM ".self::getTablename()." WHERE id = :id" );
+            $stmt = self::getDb()->prepare( "DELETE FROM ".static::getTablename()." WHERE id = :id" );
             $params[ "id" ] = $this->id;
             if ( $stmt->execute( $params ) ) {
                 return true;
@@ -118,10 +118,7 @@ abstract class Base extends ActiveRecord
      * Nombre de la tabla.
      * @return string Nombre de la tabla.
      */
-    public static function getTablename()
-    {
-        return "Productos_01";
-    }
+    abstract static function getTablename();
 
     /**
      * Obtener un registro.
@@ -130,7 +127,7 @@ abstract class Base extends ActiveRecord
      */
     public static function findOne( $id )
     {
-        $stmt = self::getDb()->prepare( "SELECT * FROM ".self::getTablename()." WHERE id = :id" );
+        $stmt = self::getDb()->prepare( "SELECT * FROM ".static::getTablename()." WHERE id = :id" );
         if ( $stmt->execute( [ "id" => $id ] ) ) {
             $result = $stmt->fetch( \PDO::FETCH_OBJ );
             if ( !empty( $result ) ) {
@@ -138,8 +135,6 @@ abstract class Base extends ActiveRecord
                 $p->setId( $result->id );
                 $p->setNombre( $result->nombre );
                 $p->setDescripcion( $result->descripcion );
-                $p->setImagen( $result->imagen );
-
                 return $p;
             }
         }
@@ -154,7 +149,7 @@ abstract class Base extends ActiveRecord
     {
         $list = [];
 
-        $stmt = self::getDb()->query( "SELECT * FROM ".self::getTablename()." ORDER BY id" );
+        $stmt = self::getDb()->query( "SELECT * FROM ".static::getTablename()." ORDER BY id" );
         $result = $stmt->fetchAll( \PDO::FETCH_OBJ );
         if ( !empty( $result ) ) {
             foreach ( $result as $r ) {
@@ -162,51 +157,10 @@ abstract class Base extends ActiveRecord
                 $p->setId( $r->id );
                 $p->setNombre( $r->nombre );
                 $p->setDescripcion( $r->descripcion );
-                $p->setImagen( $r->imagen );
-
                 $list[] = $p;
             }
         }
 
         return $list;
-    }
-
-    /**
-     * Exportar los productos a XML.
-     * @return string XML como string.
-     */
-    public static function exportXML()
-    {
-        $xml = new \XMLWriter();
-        $xml->openMemory();
-        $xml->setIndent(true);
-        $xml->setIndentString("	");
-        $xml->startDocument("1.0", "UTF-8");
-        $xml->startElement("productos");
-        $productos = self::findAll();
-        foreach ($productos as $producto) {
-            $xml->startElement("producto");
-            $xml->writeAttribute("id", $producto->getId());
-            $xml->writeElement("nombre", $producto->getNombre());
-            $xml->writeElement("descripcion", $producto->getDescripcion());
-            $xml->endElement();
-        }
-        $xml->endElement();
-        return $xml->outputMemory();
-    }
-
-    public function exportEntityInXml()
-    {
-        $xml = new \XMLWriter();
-        $xml->openMemory();
-        $xml->setIndent(true);
-        $xml->setIndentString("	");
-        $xml->startDocument("1.0", "UTF-8");
-        $xml->startElement("producto");
-        $xml->writeAttribute("id", $this->getId());
-        $xml->writeElement("nombre", $this->getNombre());
-        $xml->writeElement("descripcion", $this->getDescripcion());
-        $xml->endElement();
-        return $xml->outputMemory();
     }
 }

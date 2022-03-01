@@ -9,24 +9,8 @@ use models\api\ActiveRecord;
  * 
  * @author obarcia
  */
-class Producto extends Base
+final class Producto extends Base
 {
-    /**
-     * Identificador.
-     * @var integer
-     */
-    private $id;
-    /**
-     * Nombre.
-     * @var string 
-     */
-    private $nombre;
-    /**
-     * Descripción.
-     * @var string
-     */
-    private $descripcion;
-
     /**
      * Contenido de la imagen en Base64.
      * @var string
@@ -106,50 +90,6 @@ class Producto extends Base
 
 
     /**
-     * Guardar el registro.
-     * @return boolean true si la operación fué correcta, false en caso contrario.
-     */
-    public function save()
-    {
-        if ( $this->validate() ) {
-            $params = [];
-            if ( empty( $this->id ) ) {
-                $stmt = self::getDb()->prepare( "INSERT INTO ".self::getTablename()." (nombre, descripcion, imagen) VALUES (:nombre, :descripcion, :imagen)" );
-            } else {
-                $stmt = self::getDb()->prepare( "UPDATE ".self::getTablename()." SET nombre = :nombre, descripcion = :descripcion, imagen = :imagen WHERE id = :id" );
-                $params[ "id" ] = $this->id;
-            }
-            $params[ "nombre" ] = $this->nombre;
-            $params[ "descripcion" ] = $this->descripcion;
-            $params[ "imagen" ] = $this->imagen;
-            if ( $stmt->execute( $params ) ) {
-                $this->id = self::getDb()->lastInsertId();
-
-                return true;
-            } else {
-                return false;
-            }
-        }
-        
-        return false;
-    }
-    /**
-     * Eliminar el producto.
-     * @return boolean true si la operación fué correcta, false en caso contrario.
-     */
-    public function delete()
-    {
-        if ( !empty( $this->id ) ) {
-            $stmt = self::getDb()->prepare( "DELETE FROM ".self::getTablename()." WHERE id = :id" );
-            $params[ "id" ] = $this->id;
-            if ( $stmt->execute( $params ) ) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-    /**
      * Nombre de la tabla.
      * @return string Nombre de la tabla.
      */
@@ -157,53 +97,7 @@ class Producto extends Base
     {
         return "Productos_01";
     }
-    /**
-     * Obtener un registro.
-     * @param integer $id Identificador del registro.
-     * @return \models\Producto Instancia del registro o null si no lo encuentra.
-     */
-    public static function findOne( $id )
-    {
-        $stmt = self::getDb()->prepare( "SELECT * FROM ".self::getTablename()." WHERE id = :id" );
-        if ( $stmt->execute( [ "id" => $id ] ) ) {
-            $result = $stmt->fetch( \PDO::FETCH_OBJ );
-            if ( !empty( $result ) ) {
-                $p = new Producto();
-                $p->setId( $result->id );
-                $p->setNombre( $result->nombre );
-                $p->setDescripcion( $result->descripcion );
-                $p->setImagen( $result->imagen );
 
-                return $p;
-            }
-        }
-        
-        return null;
-    }
-
-    /**
-     * Buscar todos los productos.
-     */
-    public static function findAll()
-    {
-        $list = [];
-        
-        $stmt = self::getDb()->query( "SELECT * FROM ".self::getTablename()." ORDER BY id" );
-        $result = $stmt->fetchAll( \PDO::FETCH_OBJ );
-        if ( !empty( $result ) ) {
-            foreach ( $result as $r ) {
-                $p = new Producto();
-                $p->setId( $r->id );
-                $p->setNombre( $r->nombre );
-                $p->setDescripcion( $r->descripcion );
-                $p->setImagen( $r->imagen );
-                
-                $list[] = $p;
-            }
-        }
-        
-        return $list;
-    }
 
     /**
      * Exportar los productos a XML.
@@ -251,7 +145,6 @@ class Producto extends Base
     public function eliminarImagen()
     {
         if (!$this->id) return false;
-
         $tableName = self::getTablename();
         $stmt = self::getDb()->prepare( "UPDATE {$tableName} SET imagen = :imagen WHERE id = :id" );
         $params[ "id" ] = $this->id;
