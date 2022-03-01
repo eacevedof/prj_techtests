@@ -9,7 +9,7 @@ use models\api\ActiveRecord;
  * 
  * @author obarcia
  */
-class Producto extends ActiveRecord
+class Producto extends Base
 {
     /**
      * Identificador.
@@ -26,11 +26,16 @@ class Producto extends ActiveRecord
      * @var string
      */
     private $descripcion;
+
     /**
      * Contenido de la imagen en Base64.
      * @var string
      */
     private $imagen;
+
+    private $categoria_id;
+
+    private $categoria;
 
     // ***************************************************
     // GETTER & SETTER
@@ -67,6 +72,18 @@ class Producto extends ActiveRecord
     {
         //@eaf doble dolar
         $this->imagen = $imagen;
+    }
+    public function getCategoria()
+    {
+        if (!$this->categoria_id) return null;
+        $this->categoria = Categoria::findOne($this->categoria_id);
+        return $this->categoria;
+    }
+
+    public function setCategoria( $categoria )
+    {
+        $this->categoria = $categoria;
+        $this->categoria_id = $categoria->getId();
     }
 
     /**

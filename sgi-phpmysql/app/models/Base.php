@@ -1,7 +1,9 @@
 <?php
 namespace models;
 
-abstract class Base
+use models\api\ActiveRecord;
+
+abstract class Base extends ActiveRecord
 {
     /**
      * Identificador.
