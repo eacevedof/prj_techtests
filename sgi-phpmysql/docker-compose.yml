@@ -1,0 +1,17 @@
+# sgi-phpmysql
+version: "3.8"
+
+services:
+  web:
+    image: php:7.3-apache
+    hostname: hostapache
+    container_name: cont-apache
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/var/www/html
+
+networks:
+  default:
+    name: mariadb-univ_net
+    external: true

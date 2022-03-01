@@ -1,0 +1,188 @@
+<?php
+namespace models;
+
+use models\api\ActiveRecord;
+
+/**
+ * Clase producto.
+ * 
+ * @author obarcia
+ */
+class Producto extends ActiveRecord
+{
+    /**
+     * Identificador.
+     * @var integer
+     */
+    private $id;
+    /**
+     * Nombre.
+     * @var string 
+     */
+    private $nombre;
+    /**
+     * Descripción.
+     * @var string
+     */
+    private $descripcion;
+    /**
+     * Contenido de la imagen en Base64.
+     * @var string
+     */
+    private $imagen;
+
+    // ***************************************************
+    // GETTER & SETTER
+    // ***************************************************
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function setId( $id )
+    {
+        $this->id = $id;
+    }
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+    public function setNombre( $nombre )
+    {
+        $this->nombre = $nombre;
+    }
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+    public function setDescripcion( $descripcion )
+    {
+        $this->descripcion = $descripcion;
+    }
+    public function getImagen()
+    {
+        return $this->imagen;
+    }
+    public function setImagen( $imagen )
+    {
+        $this->imagen = $$imagen;
+    }
+    /**
+     * Validar el producto.
+     * @return boolean true si la validación es correcta, false en caso contrario.
+     */
+    public function validate()
+    {
+        //[...]
+        return true;
+    }
+    /**
+     * Guardar el registro.
+     * @return boolean true si la operación fué correcta, false en caso contrario.
+     */
+    public function save()
+    {
+        if ( $this->validate() ) {
+            $params = [];
+            if ( empty( $this->id ) ) {
+                $stmt = self::getDb()->prepare( "INSERT INTO ".self::getTablename()." (nombre, descripcion, imagen) VALUES (:nombre, :descripcion, :imagen)" );
+            } else {
+                $stmt = self::getDb()->prepare( "UPDATE ".self::getTablename()." SET nombre = :nombre, descripcion = :descripcion, imagen = :imagen WHERE id = :id" );
+                $params[ "id" ] = $this->id;
+            }
+            $params[ "nombre" ] = $this->nombre;
+            $params[ "descripcion" ] = $this->descripcion;
+            $params[ "imagen" ] = $this->imagen;
+            if ( $stmt->execute( $params ) ) {
+                $this->id = self::getDb()->lastInsertId();
+
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        return false;
+    }
+    /**
+     * Eliminar el producto.
+     * @return boolean true si la operación fué correcta, false en caso contrario.
+     */
+    public function delete()
+    {
+        if ( !empty( $this->id ) ) {
+            $stmt = self::getDb()->prepare( "DELETE FROM ".self::getTablename()." WHERE id = :id" );
+            $params[ "id" ] = $this->id;
+            if ( $stmt->execute( $params ) ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    /**
+     * Nombre de la tabla.
+     * @return string Nombre de la tabla.
+     */
+    public static function getTablename()
+    {
+        return "Productos_01";
+    }
+    /**
+     * Obtener un registro.
+     * @param integer $id Identificador del registro.
+     * @return \models\Producto Instancia del registro o null si no lo encuentra.
+     */
+    public static function findOne( $id )
+    {
+        $stmt = self::getDb()->prepare( "SELECT * FROM ".self::getTablename()." WHERE id = :id" );
+        if ( $stmt->execute( [ "id" => $id ] ) ) {
+            $result = $stmt->fetch( \PDO::FETCH_OBJ );
+            if ( !empty( $result ) ) {
+                $p = new Producto();
+                $p->setId( $result->id );
+                $p->setNombre( $result->nombre );
+                $p->setDescripcion( $result->descripcion );
+                $p->setImagen( $result->imagen );
+
+                return $p;
+            }
+        }
+        
+        return null;
+    }
+    /**
+     * Buscar todos los productos.
+     */
+    public static function findAll()
+    {
+        $list = [];
+        
+        $stmt = self::getDb()->query( "SELECT * FROM ".self::getTablename()." ORDER BY id" );
+        $result = $stmt->fetchAll( \PDO::FETCH_OBJ );
+        if ( !empty( $result ) ) {
+            foreach ( $result as $r ) {
+                $p = new Producto();
+                $p->setId( $r->id );
+                $p->setNombre( $r->nombre );
+                $p->setDescripcion( $r->descripcion );
+                $p->setImagen( $r->imagen );
+                
+                $list[] = $p;
+            }
+        }
+        
+        return $list;
+    }
+    /**
+     * Exportar los productos a XML.
+     * @return string XML como string.
+     */
+    public static function exportXML()
+    {
+        $productos = self::findAll();
+
+        //[...]
+        
+        return $xml;
+    }
+}
