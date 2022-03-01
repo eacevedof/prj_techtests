@@ -75,15 +75,14 @@ class Producto extends ActiveRecord
      */
     public function validate()
     {
+        //el nombre es olbigatorio siempre
+        if (!trim($this->nombre)) return false;
+
         //Nombre: máximo 160 caracteres en UTF‐8
-        if (strlen(utf8_encode($this->nombre))>160) {
-            return false;
-        }
+        if (strlen(utf8_encode($this->nombre))>160) return false;
 
         //Descripción: máximo 258 caracteres en UTF‐8
-        if (strlen(utf8_encode($this->descripcion))>258) {
-            return false;
-        }
+        if (strlen(utf8_encode($this->descripcion))>258) return false;
 
         return true;
     }

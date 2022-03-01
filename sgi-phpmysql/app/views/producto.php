@@ -8,6 +8,9 @@
     </head>
     <body>
         <div class="container">
+            <h3>
+              <a class="link" href="/">Productos</a>
+            </h3>
             <?php if ( !empty( $models[ "producto" ] ) ) : ?>
                 <?php
                 $id = $models[ "producto" ]->getId();
