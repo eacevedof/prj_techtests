@@ -183,6 +183,7 @@ final class Site
             if ($isSaved) return header("Location: /categorias");
 
             $this->renderView("categoria.php", ["categoria"=>$categoria, "error" => "No se pudo guardar el registro."]);
+            return;
         }
 
         $this->renderView("categoria.php", ["categoria"=>$categoria]);
