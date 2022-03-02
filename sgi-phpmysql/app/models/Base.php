@@ -76,42 +76,38 @@ abstract class Base extends ActiveRecord
      */
     public function save()
     {
-        if ( $this->validate() ) {
-            $params = [];
-            if ( empty( $this->id ) ) {
-                $stmt = self::getDb()->prepare( "INSERT INTO ".static::getTablename()." (nombre, descripcion) VALUES (:nombre, :descripcion)" );
-            } else {
-                $stmt = self::getDb()->prepare( "UPDATE ".static::getTablename()." SET nombre = :nombre, descripcion = :descripcion WHERE id = :id" );
-                $params[ "id" ] = $this->id;
-            }
-            $params[ "nombre" ] = $this->nombre;
-            $params[ "descripcion" ] = $this->descripcion;
-            if ( $stmt->execute( $params ) ) {
-                $this->id = self::getDb()->lastInsertId();
+        if (!$this->validate()) return false;
 
-                return true;
-            } else {
-                return false;
-            }
-        }
+        $table = static::getTablename();
+        $query = ($id = $this->id)
+                    ? "INSERT INTO {$table} (nombre, descripcion) VALUES (:nombre, :descripcion)"
+                    : "UPDATE {$table} SET nombre = :nombre, descripcion = :descripcion WHERE id = :id";
 
-        return false;
+        $params = [];
+        if ($id) $params["id"] = $id;
+        $stmt = self::getDb()->prepare($query);
+
+        $params["nombre"] = $this->nombre;
+        $params["descripcion"] = $this->descripcion;
+
+        if (!$stmt->execute($params)) return false;
+
+        if (!$id) $this->id = self::getDb()->lastInsertId();
+        return true;
     }
+
     /**
      * Eliminar el producto.
      * @return boolean true si la operación fué correcta, false en caso contrario.
      */
     public function delete()
     {
-        if ( !empty( $this->id ) ) {
-            $stmt = self::getDb()->prepare( "DELETE FROM ".static::getTablename()." WHERE id = :id" );
-            $params[ "id" ] = $this->id;
-            if ( $stmt->execute( $params ) ) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+        if (!$this->id) return false;
+        $table = static::getTablename();
+        $query = "DELETE FROM {$table} WHERE id = :id";
+        $stmt = self::getDb()->prepare($query);
+        $params[ "id" ] = $this->id;
+        return $stmt->execute($params);
     }
 
     /**
@@ -125,42 +121,35 @@ abstract class Base extends ActiveRecord
      * @param integer $id Identificador del registro.
      * @return \models\Producto Instancia del registro o null si no lo encuentra.
      */
-    public static function findOne( $id )
+    protected static function findOne($id)
     {
-        $stmt = self::getDb()->prepare( "SELECT * FROM ".static::getTablename()." WHERE id = :id" );
-        if ( $stmt->execute( [ "id" => $id ] ) ) {
-            $result = $stmt->fetch( \PDO::FETCH_OBJ );
-            if ( !empty( $result ) ) {
-                $p = new Producto();
-                $p->setId( $result->id );
-                $p->setNombre( $result->nombre );
-                $p->setDescripcion( $result->descripcion );
-                return $p;
-            }
-        }
+        if (!$id) return null;
 
-        return null;
+        $table = static::getTablename();
+        $query = "SELECT * FROM {$table} WHERE id = :id";
+        $stmt = self::getDb()->prepare($query);
+
+        if (!$stmt->execute(["id" => $id ])) return null;
+
+        return $stmt->fetch( \PDO::FETCH_OBJ );
+
+        /*
+        $p = new Producto();
+        $p->setId( $result->id );
+        $p->setNombre( $result->nombre );
+        $p->setDescripcion( $result->descripcion );
+        */
+
     }
 
     /**
      * Buscar todos los productos.
      */
-    public static function findAll()
+    protected static function findAll()
     {
-        $list = [];
-
-        $stmt = self::getDb()->query( "SELECT * FROM ".static::getTablename()." ORDER BY id" );
-        $result = $stmt->fetchAll( \PDO::FETCH_OBJ );
-        if ( !empty( $result ) ) {
-            foreach ( $result as $r ) {
-                $p = new Producto();
-                $p->setId( $r->id );
-                $p->setNombre( $r->nombre );
-                $p->setDescripcion( $r->descripcion );
-                $list[] = $p;
-            }
-        }
-
-        return $list;
+        $table = static::getTablename();
+        $query = "SELECT * FROM {$table} ORDER BY id";
+        $stmt = self::getDb()->query($query);
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 }

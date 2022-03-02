@@ -28,34 +28,43 @@ final class Producto extends Base
     {
         return $this->id;
     }
-    public function setId( $id )
+    public function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
+
     public function getNombre()
     {
         return $this->nombre;
     }
+
     public function setNombre( $nombre )
     {
         $this->nombre = $nombre;
+        return $this;
     }
+
     public function getDescripcion()
     {
         return $this->descripcion;
     }
-    public function setDescripcion( $descripcion )
+
+    public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
+        return $this;
     }
+
     public function getImagen()
     {
         return $this->imagen;
     }
-    public function setImagen( $imagen )
+    public function setImagen($imagen)
     {
         //@eaf doble dolar
         $this->imagen = $imagen;
+        return $this;
     }
     public function getCategoria()
     {
@@ -68,6 +77,14 @@ final class Producto extends Base
     {
         $this->categoria = $categoria;
         $this->categoria_id = $categoria->getId();
+        return $this;
+    }
+
+    public function setCategoriaId($categoriaId)
+    {
+        $this->categoria_id = $categoriaId;
+        $this->categoria = Categoria::findOne($categoriaId);
+        return $this;
     }
 
     /**
@@ -93,11 +110,39 @@ final class Producto extends Base
      * Nombre de la tabla.
      * @return string Nombre de la tabla.
      */
-    public static function getTablename()
+    public static function getTablename() { return "Productos_01"; }
+
+    public static function findOne($id)
     {
-        return "Productos_01";
+        if (!$object = parent::findOne($id)) return null;
+
+        $producto = new Producto();
+        $producto->setId($object->id)
+            ->setNombre($object->nombre)
+            ->setDescripcion($object->descripcion)
+            ->setImagen($object->imagen)
+            ->setCategoriaId($object->categoria_id)
+        ;
+
+        return $producto;
     }
 
+    public static function findAll()
+    {
+        if (!$result = parent::findAll()) return [];
+        $list = [];
+        foreach ($result as $object) {
+            $producto = new Producto();
+            $producto->setId($object->id)
+                ->setNombre($object->nombre)
+                ->setDescripcion($object->descripcion)
+                ->setImagen($object->imagen)
+                ->setCategoriaId($object->categoria_id)
+            ;
+            $list[] = $producto;
+        }
+        return $list;
+    }
 
     /**
      * Exportar los productos a XML.
