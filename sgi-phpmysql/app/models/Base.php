@@ -22,6 +22,12 @@ abstract class Base extends ActiveRecord
     protected $descripcion;
 
 
+    /**
+     * Nombre de la tabla.
+     * @return string Nombre de la tabla.
+     */
+    abstract static function getTablename();
+
     // ***************************************************
     // GETTER & SETTER
     // ***************************************************
@@ -30,26 +36,32 @@ abstract class Base extends ActiveRecord
         return $this->id;
     }
     
-    public function setId( $id )
+    public function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
     
     public function getNombre()
     {
         return $this->nombre;
     }
-    public function setNombre( $nombre )
+    
+    public function setNombre($nombre)
     {
         $this->nombre = $nombre;
+        return $this;
     }
+    
     public function getDescripcion()
     {
         return $this->descripcion;
     }
-    public function setDescripcion( $descripcion )
+    
+    public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
+        return $this;
     }
 
     /**
@@ -106,15 +118,9 @@ abstract class Base extends ActiveRecord
         $table = static::getTablename();
         $query = "DELETE FROM {$table} WHERE id = :id";
         $stmt = self::getDb()->prepare($query);
-        $params[ "id" ] = $this->id;
+        $params["id"] = $this->id;
         return $stmt->execute($params);
     }
-
-    /**
-     * Nombre de la tabla.
-     * @return string Nombre de la tabla.
-     */
-    abstract static function getTablename();
 
     /**
      * Obtener un registro.
@@ -132,14 +138,6 @@ abstract class Base extends ActiveRecord
         if (!$stmt->execute(["id" => $id ])) return null;
 
         return $stmt->fetch( \PDO::FETCH_OBJ );
-
-        /*
-        $p = new Producto();
-        $p->setId( $result->id );
-        $p->setNombre( $result->nombre );
-        $p->setDescripcion( $result->descripcion );
-        */
-
     }
 
     /**

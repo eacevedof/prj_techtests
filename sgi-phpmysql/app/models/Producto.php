@@ -1,9 +1,6 @@
 <?php
 namespace models;
 
-use models\api\ActiveRecord;
-
-
 /**
  * Clase producto.
  * 
@@ -20,6 +17,12 @@ final class Producto extends Base
     private $categoria_id;
 
     private $categoria;
+
+    /**
+     * Nombre de la tabla.
+     * @return string Nombre de la tabla.
+     */
+    public static function getTablename() { return "Productos_01"; }
 
     // ***************************************************
     // GETTER & SETTER
@@ -105,12 +108,37 @@ final class Producto extends Base
         return true;
     }
 
-
     /**
-     * Nombre de la tabla.
-     * @return string Nombre de la tabla.
+     * Guardar el registro.
+     * @return boolean true si la operación fué correcta, false en caso contrario.
      */
-    public static function getTablename() { return "Productos_01"; }
+    public function save()
+    {
+        if (!$this->validate()) return false;
+
+        $table = static::getTablename();
+        $query = ($id = $this->id)
+            ? "INSERT INTO {$table} (nombre, descripcion, imagen, categoria_id) 
+               VALUES (:nombre, :descripcion, :imagen, :categoria_id)"
+
+            : "UPDATE {$table} 
+               SET nombre = :nombre, descripcion = :descripcion, imagen = :imagen, categoria_id=:categoria_id 
+               WHERE id = :id";
+
+        $params = [];
+        if ($id) $params["id"] = $id;
+        $stmt = self::getDb()->prepare($query);
+
+        $params["nombre"] = $this->nombre;
+        $params["descripcion"] = $this->descripcion;
+        $params["imagen"] = $this->imagen;
+        $params["categoria_id"] = $this->categoria_id;
+
+        if (!$stmt->execute($params)) return false;
+
+        if (!$id) $this->id = self::getDb()->lastInsertId();
+        return true;
+    }
 
     public static function findOne($id)
     {
