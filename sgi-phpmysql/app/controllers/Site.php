@@ -148,17 +148,19 @@ final class Site
 
     public function actionCategoria()
     {
+        d($_POST,"post"); d($_GET,"get");
         $categoria = ($categoriaId = trim($_GET[ "id" ] ?? ""))
                         ? Categoria::findOne($categoriaId)
                         : null;
+
         $method = trim($_GET["method"] ?? "");
         switch ($method) {
             case "delete":
-                if (!$categoria) throw new \Exception( "Categoría no encontrada." );
+                if (!$categoria) throw new \Exception("Categoría no encontrada.");
                 $categoria->delete();
                 header("Location: /categorias");
             break;
-            case "categorias-xml":
+            case "categoriasxml":
                 $this->responseXml(Categoria::exportXML());
             break;
         }
@@ -172,6 +174,7 @@ final class Site
         if (!$categoriaId && !$categoria){
             $categoria = new Categoria();
             if ($action==="save") {
+                d("here");
                 $isSaved = $categoria
                     ->setNombre(trim($_POST["nombre"] ?? ""))
                     ->setDescripcion(trim($_POST["descripcion"] ?? ""))
@@ -180,12 +183,13 @@ final class Site
                     header("Location: /categorias");
                     exit;
                 }
-                $this->renderView("categoria.php",["categoria" => $categoria, "error" => "No se pudo guardar el registro." ]);
+                $this->renderView("categoria.php", ["categoria"=>$categoria, "error" => "No se pudo guardar el registro."]);
             }
             else {
-                $this->renderView("categoria.php",["categoria" => $categoria]);
+                $this->renderView("categoria.php", ["categoria"=>$categoria]);
             }
         }
+        $this->renderView("categoria.php", ["categoria"=>$categoria]);
     }
 
 
@@ -209,6 +213,12 @@ final class Site
     public function actionXml()
     {
         $content = Producto::exportXML();
+        $this->responseXml($content);
+    }
+
+    public function actionCategoriasXml()
+    {
+        $content = Categoria::exportXML();
         $this->responseXml($content);
     }
 }

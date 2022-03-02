@@ -14,7 +14,7 @@
         </h2>
         <h3>
           <a class="btn btn-success" href="/categoria">Nueva categoría</a>
-          <a class="btn btn-primary" href="/categorias-xml" target="_blank">XML</a>
+          <a class="btn btn-primary" href="/categoriasxml" target="_blank">XML</a>
         </h3>
 
         <table class="table table-striped">
@@ -36,11 +36,11 @@
                     <td><?= htmlentities($categoria->getNombre()) ?></td>
                     <td><?= htmlentities($categoria->getDescripcion()) ?></td>
                     <td>
-                        <a class="btn btn-primary" href="/categorias/<?= $categoria->getId() ?>">Editar</a>
-                        <button type="button" class="btn btn-danger" onclick="deleteConfirm(`/categorias/<?= $categoria->getId() ?>/delete`)">
+                        <a class="btn btn-primary" href="/categoria/<?= $categoria->getId() ?>">Editar</a>
+                        <button type="button" class="btn btn-danger" onclick="deleteConfirm(`/categoria/<?= $categoria->getId() ?>/delete`)">
                           Eliminar
                         </button>
-                        <a class="btn btn-dark" href="/categorias/<?= $categoria->getId() ?>/xml">Xml</a>
+                        <a class="btn btn-dark" href="/categoria/<?= $categoria->getId() ?>/xml">Xml</a>
                     </td>
                 </tr>
                 <?php 

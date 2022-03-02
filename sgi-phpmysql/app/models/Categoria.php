@@ -68,10 +68,10 @@ final class Categoria extends Base
         $xml->setIndent(true);
         $xml->setIndentString("	");
         $xml->startDocument("1.0", "UTF-8");
-        $xml->startElement("Categorias");
+        $xml->startElement("categorias");
         $categorias = self::findAll();
         foreach ($categorias as $categoria) {
-            $xml->startElement("Categoria");
+            $xml->startElement("categoria");
                 $xml->writeAttribute("id", $categoria->getId());
                 $xml->writeElement("nombre", $categoria->getNombre());
                 $xml->writeElement("descripcion", $categoria->getDescripcion());
