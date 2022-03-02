@@ -111,7 +111,7 @@ final class Site
                         $producto->setNombre( $_POST[ "nombre" ]);
                         // @eaf no se debe usar el metodo estatico
                         $producto->setDescripcion($_POST[ "descripcion" ]);
-                        $producto->setCategoriaId($_POST["categoria_id"]);
+                        $producto->setCategoriaId((int) $_POST["categoria_id"]);
                         if ( !empty( $_FILES[ "imagen" ][ "tmp_name" ] ) && in_array( $_FILES[ "imagen" ][ "type" ], [ "image/jpg", "image/jpeg", "image/png" ] ) ) {
                             $producto->setImagen( base64_encode( file_get_contents( $_FILES[ "imagen" ][ "tmp_name" ] ) ) );
                         }
@@ -120,6 +120,7 @@ final class Site
                         if ( $producto->save() ) {
                             header( "Location: /" );
                         } else {
+                            //dd($producto);
                             $this->renderView( "producto.php", [ "producto" => $producto, "error" => "No se pudo guardar el registro." ] );
                         }
                     } else {
@@ -180,6 +181,7 @@ final class Site
                 ->setDescripcion(trim($_POST["descripcion"] ?? ""))
                 ->save();
             if ($isSaved) return header("Location: /categorias");
+
             $this->renderView("categoria.php", ["categoria"=>$categoria, "error" => "No se pudo guardar el registro."]);
         }
 
