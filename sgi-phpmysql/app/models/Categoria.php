@@ -81,4 +81,18 @@ final class Categoria extends Base
         return $xml->outputMemory();
     }
 
+    public function exportEntityInXml()
+    {
+        $xml = new \XMLWriter();
+        $xml->openMemory();
+        $xml->setIndent(true);
+        $xml->setIndentString("	");
+        $xml->startDocument("1.0", "UTF-8");
+        $xml->startElement("categoria");
+        $xml->writeAttribute("id", $this->getId());
+            $xml->writeElement("nombre", $this->getNombre());
+            $xml->writeElement("descripcion", $this->getDescripcion());
+        $xml->endElement();
+        return $xml->outputMemory();
+    }
 }

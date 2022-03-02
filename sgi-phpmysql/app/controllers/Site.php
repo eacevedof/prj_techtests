@@ -148,61 +148,48 @@ final class Site
 
     public function actionCategoria()
     {
-        d($_POST,"post"); d($_GET,"get");
-        $categoria = ($categoriaId = trim($_GET[ "id" ] ?? ""))
-                        ? Categoria::findOne($categoriaId)
-                        : null;
-
+        $categoriaId = (int) trim($_GET[ "id" ] ?? "");
         $method = trim($_GET["method"] ?? "");
-        switch ($method) {
-            case "delete":
-                if (!$categoria) throw new \Exception("Categoría no encontrada.");
-                $categoria->delete();
-                header("Location: /categorias");
-            break;
-            case "categoriasxml":
-                $this->responseXml(Categoria::exportXML());
-            break;
-        }
 
-        //si no hay médodo o no se reconoce
-
-        //insert
-        $action = trim($_POST["action"] ?? "");
-
-        //si no hay ni id ni objeto
-        if (!$categoriaId && !$categoria){
-            $categoria = new Categoria();
-            if ($action==="save") {
-                d("here");
-                $isSaved = $categoria
-                    ->setNombre(trim($_POST["nombre"] ?? ""))
-                    ->setDescripcion(trim($_POST["descripcion"] ?? ""))
-                    ->save();
-                if ($isSaved) {
+        if ($categoriaId && $method) {
+            $categoria = Categoria::findOne($categoriaId);
+            switch ($method) {
+                case "delete":
+                    if (!$categoria) throw new \Exception("Categoría no encontrada.");
+                    $categoria->delete();
                     header("Location: /categorias");
-                    exit;
-                }
-                $this->renderView("categoria.php", ["categoria"=>$categoria, "error" => "No se pudo guardar el registro."]);
+                break;
+                case "xml":
+                    $this->responseXml($categoria->exportEntityInXml(), "categoria");
+                break;
             }
-            else {
-                $this->renderView("categoria.php", ["categoria"=>$categoria]);
-            }
+            return;
         }
+
+        $action = trim($_POST["action"] ?? "");
+        $categoria = Categoria::findOne($categoriaId) ?: new Categoria();
+        if ($action === "save") {
+            $isSaved = $categoria->setNombre(trim($_POST["nombre"] ?? ""))
+                ->setDescripcion(trim($_POST["descripcion"] ?? ""))
+                ->save();
+            if ($isSaved) return header("Location: /categorias");
+            $this->renderView("categoria.php", ["categoria"=>$categoria, "error" => "No se pudo guardar el registro."]);
+        }
+
         $this->renderView("categoria.php", ["categoria"=>$categoria]);
     }
 
 
-    private function responseXml($content) {
+    private function responseXml($content, $filename="productos") {
         header( 'Content-Description: File Transfer');
         header( 'Content-Type: application/xml' );
-        header( 'Content-Disposition: attachment; filename=productos.xml' );
+        header( "Content-Disposition: attachment; filename=$filename.xml");
         header( 'Content-Transfer-Encoding: binary');
         header( 'Connection: Keep-Alive');
         header( 'Expires: 0');
         header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header( 'Pragma: public' );
-        header( 'Content-Length: '.strlen( $content ) );
+        header( 'Content-Length: '.strlen($content));
         echo $content;
         exit;
     }
@@ -219,6 +206,6 @@ final class Site
     public function actionCategoriasXml()
     {
         $content = Categoria::exportXML();
-        $this->responseXml($content);
+        $this->responseXml($content, "categorias");
     }
 }
