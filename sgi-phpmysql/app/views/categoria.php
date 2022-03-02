@@ -16,7 +16,7 @@
                 $id = $categoria->getId();
                 $error = ($models["error"] ?? "")
             ?>
-                <h3>Categoría: <?=$id ? "" : "Nueva" ?></h3>
+                <h3>Categoría: <?= ( $id ?: "Nueva" ) ?></h3>
                 <form class="form" method="post">
                     <?php if ($error): ?>
                         <div class="alert alert-danger"><?= htmlentities($error) ?></div>
