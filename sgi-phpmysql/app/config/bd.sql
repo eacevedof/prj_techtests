@@ -28,8 +28,7 @@ CREATE TABLE `productos_01` (
     `id` INT(6) UNSIGNED NOT NULL,
     `nombre` VARCHAR(160) DEFAULT NULL,
     `descripcion` VARCHAR(258) DEFAULT NULL,
-    `imagen` LONGBLOB,
-    `categoria_id` INT(6) DEFAULT NULL
+    `imagen` LONGBLOB
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `categorias` (
@@ -48,6 +47,7 @@ ALTER TABLE `productos_01` ADD PRIMARY KEY (`id`);
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+ALTER TABLE productos_01 ADD COLUMN categoria_id INT(6) AFTER imagen;
 ALTER TABLE `categorias` MODIFY `id` INT(6) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `productos_01`

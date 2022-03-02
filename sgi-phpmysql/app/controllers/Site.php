@@ -8,7 +8,7 @@ use models\Producto;
  * 
  * @author obarcia
  */
-class Site
+final class Site
 {
     /**
      * Acción por defecto.
