@@ -1,3 +1,6 @@
+<?php
+$categorias = ($models["categorias"] ?? []);
+?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -14,7 +17,9 @@
         </h2>
         <h3>
           <a class="btn btn-success" href="/categoria">Nueva categoría</a>
-          <a class="btn btn-primary" href="/categoriasxml" target="_blank">XML</a>
+          <? if($categorias): ?>
+              <a class="btn btn-primary" href="/categoriasxml" target="_blank">Exportar a XML</a>
+          <? endif; ?>
         </h3>
 
         <table class="table table-striped">
@@ -28,7 +33,7 @@
             </thead>
             <tbody>
                 <?php 
-                if (!empty($models["categorias"])):
+                if ($categorias):
                     foreach ($models["categorias"] as $categoria ) : 
                 ?>
                 <tr>

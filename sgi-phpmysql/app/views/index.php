@@ -1,10 +1,13 @@
+<?php
+$productos = ($models["productos"] ?? []);
+?>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>Productos</title>
-      <?
-      include("assets.php");
-      ?>
+        <?
+        include("assets.php");
+        ?>
     </head>
     <body>
     <div class="container">
@@ -17,8 +20,10 @@
 @eaf
 convierto a friendly url y agrego a productos un enlace para refresh y apunto al metodo principal actionProductos
 -->
-          <a class="btn btn-success" href="/productos">Nuevo producto</a>
-          <a class="btn btn-primary" href="/xml" target="_blank">XML</a>
+            <a class="btn btn-success" href="/productos">Nuevo producto</a>
+            <? if($productos): ?>
+            <a class="btn btn-primary" href="/xml" target="_blank">Exportar a XML</a>
+            <? endif; ?>
         </h3>
 
         <table class="table table-striped">
@@ -34,8 +39,8 @@ convierto a friendly url y agrego a productos un enlace para refresh y apunto al
             </thead>
             <tbody>
                 <?php 
-                if (!empty($models["productos"])):
-                    foreach ($models["productos"] as $producto ) : 
+                if ($productos):
+                    foreach ($productos as $producto):
                 ?>
                 <tr>
                     <td><?= htmlentities($producto->getId()) ?></td>
@@ -62,7 +67,8 @@ convierto a friendly url y agrego a productos un enlace para refresh y apunto al
                 </tr>
                 <?php 
                     endforeach; 
-                else: ?>
+                else:
+                ?>
                     <tr><td colspan="5">No hay productos.</td></tr>
                 <?php endif; ?>
             </tbody>
