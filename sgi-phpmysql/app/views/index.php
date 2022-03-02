@@ -68,6 +68,6 @@ convierto a friendly url y agrego a productos un enlace para refresh y apunto al
             </tbody>
         </table>
     </div>
-
+    <?include("js-modal.php")?>
     </body>
 </html>

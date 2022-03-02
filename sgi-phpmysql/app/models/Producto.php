@@ -193,6 +193,13 @@ final class Producto extends Base
                 $xml->writeElement("descripcion", $producto->getDescripcion());
                 $urlImagen = $producto->getImagen() ? BASE_URL."/productos/{$producto->getId()}?image=1": "";
                 $xml->writeElement("imagen", $urlImagen);
+                if($categoria = $producto->getCategoria()) {
+                    $xml->startElement("categoria");
+                    $xml->writeAttribute("id", $categoria->getId());
+                    $xml->writeElement("nombre", $categoria->getNombre());
+                    $xml->writeElement("descripcion", $categoria->getDescripcion());
+                    $xml->endElement();
+                }
             $xml->endElement();
         }
         $xml->endElement();
@@ -212,6 +219,13 @@ final class Producto extends Base
             $xml->writeElement("descripcion", $this->getDescripcion());
             $urlImagen = $this->getImagen() ? BASE_URL."/productos/{$this->getId()}?image=1": "";
             $xml->writeElement("imagen", $urlImagen);
+            if($categoria = $this->getCategoria()) {
+                $xml->startElement("categoria");
+                $xml->writeAttribute("id", $categoria->getId());
+                $xml->writeElement("nombre", $categoria->getNombre());
+                $xml->writeElement("descripcion", $categoria->getDescripcion());
+                $xml->endElement();
+            }
         $xml->endElement();
         return $xml->outputMemory();
     }
