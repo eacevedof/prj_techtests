@@ -11,7 +11,7 @@ final class Categoria extends Base
      * Nombre de la tabla.
      * @return string Nombre de la tabla.
      */
-    public static function getTablename() { return "categoria"; }
+    public static function getTablename() { return "categorias"; }
 
     /**
      * Validar el Categoria.

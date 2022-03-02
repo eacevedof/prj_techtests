@@ -43,11 +43,10 @@ final class Site
     public function actionIndex()
     {
         $productos = Producto::findAll();
-        //$categorias = Categoria::findAll();
-
+        $categorias = Categoria::findAll();
         $this->renderView( "index.php",[
             "productos" => $productos,
-            //"categorias" => $categorias
+            "categorias" => $categorias
         ]);
     }
 
