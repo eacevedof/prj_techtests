@@ -47,7 +47,6 @@ final class Site
         $this->renderView( "index.php", ["productos" => $productos]);
     }
 
-
     /**
      * Vista de un producto.
      */
@@ -139,6 +138,14 @@ final class Site
         new \Exception( "Producto not found." );
     }
 
+    /**
+     * Exportar el XML con los productos.
+     */
+    public function actionXml()
+    {
+        $content = Producto::exportXML();
+        $this->responseXml($content);
+    }
 
     public function actionCategorias()
     {
@@ -179,7 +186,6 @@ final class Site
         $this->renderView("categoria.php", ["categoria"=>$categoria]);
     }
 
-
     private function responseXml($content, $filename="productos") {
         header( 'Content-Description: File Transfer');
         header( 'Content-Type: application/xml' );
@@ -192,15 +198,6 @@ final class Site
         header( 'Content-Length: '.strlen($content));
         echo $content;
         exit;
-    }
-
-    /**
-     * Exportar el XML con los productos.
-     */
-    public function actionXml()
-    {
-        $content = Producto::exportXML();
-        $this->responseXml($content);
     }
 
     public function actionCategoriasXml()
