@@ -94,7 +94,7 @@ final class Producto extends Base
      * Validar el producto.
      * @return boolean true si la validación es correcta, false en caso contrario.
      */
-    public function validate()
+    protected function validate()
     {
         //el nombre es olbigatorio siempre
         if (!trim($this->nombre)) return false;
