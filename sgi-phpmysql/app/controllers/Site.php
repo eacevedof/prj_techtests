@@ -1,6 +1,7 @@
 <?php
 namespace controllers;
 
+use models\Categoria;
 use models\Producto;
 
 /**
@@ -42,7 +43,12 @@ final class Site
     public function actionIndex()
     {
         $productos = Producto::findAll();
-        $this->renderView( "index.php", [ "productos" => $productos ] );
+        //$categorias = Categoria::findAll();
+
+        $this->renderView( "index.php",[
+            "productos" => $productos,
+            //"categorias" => $categorias
+        ]);
     }
 
     /**

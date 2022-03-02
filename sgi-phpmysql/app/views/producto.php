@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label for="imagen" class="control-label">Imagen</label>
 <!--
-@eaf solo permito la seleccion solo de jpg y png
+@eaf solo permito la seleccion de jpg y png
 -->
                         <input class="form-control" id="imagen" name="imagen" type="file" accept="image/png, image/jpeg, image/jpeg" />
                       <?php
