@@ -112,6 +112,8 @@ final class Site
                         if ( !empty( $_FILES[ "imagen" ][ "tmp_name" ] ) && in_array( $_FILES[ "imagen" ][ "type" ], [ "image/jpg", "image/jpeg", "image/png" ] ) ) {
                             $producto->setImagen( base64_encode( file_get_contents( $_FILES[ "imagen" ][ "tmp_name" ] ) ) );
                         }
+                        //d($_POST);
+                        //dd($producto);
                         if ( $producto->save() ) {
                             header( "Location: /" );
                         } else {

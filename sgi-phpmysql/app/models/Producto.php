@@ -117,12 +117,12 @@ final class Producto extends Base
         if (!$this->validate()) return false;
 
         $table = static::getTablename();
-        $query = ($id = $this->id)
+        $query = (!$id = $this->id)
             ? "INSERT INTO {$table} (nombre, descripcion, imagen, categoria_id) 
                VALUES (:nombre, :descripcion, :imagen, :categoria_id)"
 
             : "UPDATE {$table} 
-               SET nombre = :nombre, descripcion = :descripcion, imagen = :imagen, categoria_id=:categoria_id 
+               SET nombre = :nombre, descripcion = :descripcion, imagen = :imagen, categoria_id = :categoria_id 
                WHERE id = :id";
 
         $params = [];
@@ -134,6 +134,7 @@ final class Producto extends Base
         $params["imagen"] = $this->imagen;
         $params["categoria_id"] = $this->categoria_id;
 
+        //d($query);d($params);
         if (!$stmt->execute($params)) return false;
 
         if (!$id) $this->id = self::getDb()->lastInsertId();
