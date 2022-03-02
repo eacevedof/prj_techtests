@@ -8,8 +8,11 @@
     </head>
     <body>
     <div class="container">
+        <h2>
+          <a class="link" href="/">Productos</a> /
+          <a class="link" href="/categorias">Categorias</a>
+        </h2>
         <h3>
-          <a class="link" href="/">Productos</a>
 <!--
 @eaf
 convierto a friendly url y agrego a productos un enlace para refresh y apunto al metodo principal actionProductos
@@ -65,20 +68,6 @@ convierto a friendly url y agrego a productos un enlace para refresh y apunto al
             </tbody>
         </table>
     </div>
-    <script>
-    function deleteConfirm(url){
-      Swal.fire({
-        title: "¿Deseas continuar con la eliminación?",
-        showCancelButton: true,
-        cancelButtonText: "Cancelar",
-        confirmButtonText: "Continuar",
-        confirmButtonColor: "red",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location = url
-        }
-      })
-    }
-    </script>
+
     </body>
 </html>

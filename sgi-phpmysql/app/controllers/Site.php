@@ -43,11 +43,55 @@ final class Site
     public function actionIndex()
     {
         $productos = Producto::findAll();
+        $this->renderView( "index.php", ["productos" => $productos]);
+    }
+
+    public function actionCategorias()
+    {
         $categorias = Categoria::findAll();
-        $this->renderView( "index.php",[
-            "productos" => $productos,
-            "categorias" => $categorias
-        ]);
+        $this->renderView( "categorias.php", ["categorias" => $categorias]);
+    }
+
+    public function actionCategoria()
+    {
+        $categoria = ($categoriaId = trim($_GET[ "id" ] ?? ""))
+                        ? Categoria::findOne($categoriaId)
+                        : null;
+        $method = trim($_GET["method"] ?? "");
+        switch ($method) {
+            case "delete":
+                if (!$categoria) throw new \Exception( "Categoría no encontrada." );
+                $categoria->delete();
+                header("Location: /categorias");
+            break;
+            case "categorias-xml":
+                $this->responseXml(Categoria::exportXML());
+            break;
+        }
+
+        //si no hay médodo o no se reconoce
+
+        //insert
+        $action = trim($_POST["action"] ?? "");
+
+        //si no hay ni id ni objeto
+        if (!$categoriaId && !$categoria){
+            $categoria = new Categoria();
+            if ($action==="save") {
+                $isSaved = $categoria
+                    ->setNombre(trim($_POST["nombre"] ?? ""))
+                    ->setDescripcion(trim($_POST["descripcion"] ?? ""))
+                    ->save();
+                if ($isSaved) {
+                    header("Location: /categorias");
+                    exit;
+                }
+
+                $this->renderView();
+
+
+            }
+        }
     }
 
     /**
