@@ -32,9 +32,10 @@ final class Site
      * @param string $view Nombre de la vista.
      * @param array $models Listado de modelos.
      */
-    protected function renderView( $view, $models = [] )
+    protected function renderView($view, $models = [])
     {
-        include( __DIR__ . "/../views/" .$view );
+        $dir =  __DIR__;
+        include("{$dir}/../views/{$view}");
     }
 
     /**
@@ -86,10 +87,10 @@ final class Site
                     header("Location: /categorias");
                     exit;
                 }
-
-                $this->renderView();
-
-
+                $this->renderView("categoria.php",["categoria" => $categoria, "error" => "No se pudo guardar el registro." ]);
+            }
+            else {
+                $this->renderView("categoria.php",["categoria" => $categoria]);
             }
         }
     }

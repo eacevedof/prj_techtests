@@ -80,7 +80,7 @@ abstract class Base extends ActiveRecord
         if (!$this->validate()) return false;
 
         $table = static::getTablename();
-        $query = ($id = $this->id)
+        $query = (!$id = $this->id)
                     ? "INSERT INTO {$table} (nombre, descripcion) VALUES (:nombre, :descripcion)"
                     : "UPDATE {$table} SET nombre = :nombre, descripcion = :descripcion WHERE id = :id";
 
