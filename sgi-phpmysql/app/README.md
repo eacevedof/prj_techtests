@@ -41,3 +41,5 @@ una variable a partir de un string.
 - Permitir exportar un único producto a xml  ✅
 - Añadir confirmación al eliminar un producto ✅
 - Hacer que la imagen no sea obligatoria y permitir eliminar la imagen de un producto ya existente ✅
+
+- ![](https://trello.com/1/cards/5db1c3ed16b0e26eb0aa2495/attachments/621fdef3b4669e8f956f6329/previews/621fdef4b4669e8f956f634b/download/image.png)
